@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpectreIA — ton Spectre IA pour Destiny 2</title>
+<meta name="description" content="SpectreIA : compagnon IA gratuit pour Destiny 2. Builds générés par Gemma 4 en local, détection de god rolls, overlay en jeu. 100 % sur ton PC.">
+<meta property="og:title" content="SpectreIA — ton Spectre IA pour Destiny 2">
+<meta property="og:description" content="Builds IA, god rolls, overlay en jeu. Gratuit, et l'IA tourne sur ton PC.">
+<meta property="og:image" content="icon-256.png">
+<meta name="theme-color" content="#07090a">
+<link rel="icon" type="image/png" href="icon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090a;
+    --bg-2: #0c1011;
+    --line: rgba(74, 222, 128, 0.14);
+    --line-strong: rgba(74, 222, 128, 0.38);
+    --ink: #e7ece8;
+    --ink-2: rgba(231, 236, 232, 0.68);
+    --ink-3: rgba(231, 236, 232, 0.42);
+    --green: #4ade80;
+    --green-deep: #16a34a;
+    --amber: #e0a33a;
+    --radius: 14px;
+    --display: 'Syncopate', 'Arial Black', sans-serif;
+    --body: 'Instrument Sans', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+  .wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+  /* Grain + halo global */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  main, header, footer { position: relative; z-index: 1; }
+
+  /* ── Barre du haut ───────────────────────────────────────── */
+  .top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+  .brand img { width: 30px; height: 30px; }
+  .brand span { font: 700 13px/1 var(--display); letter-spacing: .32em; }
+  .brand:hover { text-decoration: none; }
+  .top nav { display: flex; gap: 26px; font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .top nav a { color: var(--ink-3); }
+  .top nav a:hover { color: var(--green); text-decoration: none; }
+
+  /* ── Hero ────────────────────────────────────────────────── */
+  .hero-band { position: relative; overflow: hidden; }
+  .hero { position: relative; padding: 72px 0 120px; min-height: min(88vh, 860px); display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; }
+  .hero > div:last-child { min-width: 0; position: relative; }
+  .rings { position: absolute; right: -18%; top: 50%; width: min(980px, 120vw); aspect-ratio: 1; transform: translateY(-50%); pointer-events: none; }
+  .rings svg { width: 100%; height: 100%; }
+  .rings .spin { transform-origin: 500px 500px; animation: spin 90s linear infinite; }
+  .rings .spin-r { transform-origin: 500px 500px; animation: spin 140s linear infinite reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ghost { position: absolute; right: calc(-18% + min(980px, 120vw) / 2 - 90px); top: 50%; width: 180px; transform: translateY(-50%);
+    filter: drop-shadow(0 0 40px rgba(74, 222, 128, .35)); animation: hover 6s ease-in-out infinite; }
+  @keyframes hover { 50% { transform: translateY(calc(-50% - 12px)); } }
+
+  .eyebrow { font: 500 12px var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--green); display: inline-flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--green); }
+  h1 { font: 700 clamp(38px, 6.4vw, 84px)/1.02 var(--display); letter-spacing: -.01em; margin: 22px 0 26px; max-width: 12ch; text-transform: uppercase; }
+  h1 em { font-style: normal; color: var(--green); text-shadow: 0 0 28px rgba(74, 222, 128, .45); }
+  .lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 46ch; margin: 0 0 38px; }
+
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+  .btn {
+    position: relative; display: inline-flex; align-items: center; gap: 14px; padding: 18px 28px;
+    font: 700 13px/1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: #04130a;
+    background: var(--green); border-radius: 10px; border: 0; cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(74, 222, 128, .6), 0 12px 40px -8px rgba(74, 222, 128, .55);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(74, 222, 128, .9), 0 18px 50px -8px rgba(74, 222, 128, .7); }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-meta { font: 400 12px var(--mono); color: var(--ink-3); line-height: 1.5; }
+  .btn-meta strong { color: var(--ink-2); font-weight: 500; }
+
+  .reveal { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+  .d1 { animation-delay: .05s; } .d2 { animation-delay: .18s; } .d3 { animation-delay: .32s; } .d4 { animation-delay: .46s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; }
+  .fact { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); background: rgba(12, 16, 17, .6); }
+  .fact b { color: var(--green); font-weight: 500; }
+
+  /* ── Sections ────────────────────────────────────────────── */
+  section { padding: 110px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: grid; grid-template-columns: 180px 1fr; gap: 28px; margin-bottom: 56px; }
+  .sec-num { font: 500 12px var(--mono); color: var(--green); letter-spacing: .2em; padding-top: 10px; }
+  h2 { font: 700 clamp(26px, 3.4vw, 42px)/1.1 var(--display); text-transform: uppercase; margin: 0; letter-spacing: -.005em; }
+  .sec-head p { color: var(--ink-2); margin: 16px 0 0; max-width: 60ch; }
+
+  /* Fonctionnalités : grille asymétrique */
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .card {
+    grid-column: span 2; position: relative; padding: 30px 28px 32px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(74, 222, 128, .045), transparent 55%), var(--bg-2); overflow: hidden;
+    transition: border-color .25s, transform .25s;
+  }
+  .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .card.wide { grid-column: span 3; }
+  .card.hero-card { grid-column: span 4; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; min-height: 420px; }
+  .card .tag { font: 500 11px var(--mono); letter-spacing: .18em; color: var(--green); text-transform: uppercase; }
+  .card h3 { font: 700 17px/1.3 var(--display); text-transform: uppercase; margin: 14px 0 10px; letter-spacing: .02em; }
+  .card p { color: var(--ink-2); margin: 0; font-size: 15px; }
+  .card .corner { position: absolute; top: 0; right: 0; width: 64px; height: 64px; border-top: 1px solid var(--line-strong); border-right: 1px solid var(--line-strong); border-top-right-radius: var(--radius); opacity: .6; }
+  .loop { font: 400 13px/1.9 var(--mono); color: var(--ink-2); border-left: 1px solid var(--line-strong); padding-left: 18px; margin-top: 26px; }
+  .loop span { color: var(--green); }
+  .kbd { font: 500 12px var(--mono); padding: 3px 8px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 6px; color: var(--ink); }
+
+  /* Installation : étapes */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 70px 1fr; gap: 18px; padding: 26px 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); }
+  .steps li::before { content: counter(s, decimal-leading-zero); font: 700 22px var(--display); color: var(--green); }
+  .steps h3 { margin: 0 0 6px; font: 600 18px var(--body); }
+  .steps p { margin: 0; color: var(--ink-2); }
+  .warn { margin-top: 12px; padding: 14px 16px; border-radius: 10px; border: 1px solid rgba(224, 163, 58, .35); background: rgba(224, 163, 58, .07); color: #f1d7a8; font-size: 14.5px; }
+  .warn strong { color: var(--amber); }
+
+  /* Prérequis */
+  .spec { display: flex; flex-wrap: wrap; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+  .spec div { flex: 1 1 200px; background: var(--bg-2); padding: 26px 24px; }
+  .spec dt { font: 500 11px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+  .spec dd { margin: 8px 0 0; font-weight: 600; }
+  .spec dd small { display: block; font-weight: 400; color: var(--ink-2); margin-top: 4px; font-size: 14px; }
+
+  /* FAQ */
+  details { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; padding: 24px 0; font: 600 18px var(--body); }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font: 400 24px/1 var(--mono); color: var(--green); transition: transform .25s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: -6px 0 26px; color: var(--ink-2); max-width: 70ch; }
+
+  /* Bas de page */
+  .final { text-align: center; padding: 120px 0; }
+  .final h2 { margin-bottom: 30px; }
+  footer { border-top: 1px solid var(--line); padding: 36px 0 60px; color: var(--ink-3); font-size: 13px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+
+  @media (max-width: 900px) {
+    .top nav { display: none; }
+    .rings { right: -60%; opacity: .45; }
+    .ghost { display: none; }
+    .grid { grid-template-columns: 1fr; }
+    .card, .card.wide, .card.hero-card { grid-column: auto; grid-row: auto; min-height: 0; }
+    .sec-head { grid-template-columns: 1fr; gap: 8px; }
+    .steps li { grid-template-columns: 1fr; gap: 8px; }
+    section { padding: 80px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#"><img src="icon-64.png" alt=""><span>SPECTRE IA</span></a>
+  <nav>
+    <a href="#fonctions">Fonctions</a>
+    <a href="#installation">Installation</a>
+    <a href="#config">Config</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero-band">
+  <div class="wrap hero">
+    <div class="rings" aria-hidden="true">
+      <svg viewBox="0 0 1000 1000" fill="none">
+        <g class="spin" stroke="rgba(74,222,128,.22)">
+          <circle cx="500" cy="500" r="470" stroke-dasharray="2 14"/>
+          <circle cx="500" cy="500" r="380"/>
+        </g>
+        <g class="spin-r" stroke="rgba(74,222,128,.16)">
+          <circle cx="500" cy="500" r="300" stroke-dasharray="60 18 4 18"/>
+          <circle cx="500" cy="500" r="230"/>
+          <path d="M500 20v60M500 920v60M20 500h60M920 500h60" stroke="rgba(74,222,128,.45)"/>
+        </g>
+        <circle cx="500" cy="500" r="160" stroke="rgba(224,163,58,.25)" stroke-dasharray="1 7"/>
+      </svg>
+    </div>
+    <img class="ghost" src="icon-256.png" alt="">
+
+    <div>
+      <div class="eyebrow reveal d1">Compagnon Destiny 2 · Windows</div>
+      <h1 class="reveal d2">Ton Spectre <em>pense</em> avec toi.</h1>
+      <p class="lede reveal d3">SpectreIA construit tes builds avec une IA qui tourne sur ton PC, repère tes god rolls à la sortie des activités et reste avec toi en jeu. Gratuit, sans compte à créer.</p>
+      <div class="cta reveal d4">
+        <a class="btn" id="dl" href="https://github.com/Davvou-Ai/SpectreIA/releases/latest">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M6 11l6 6 6-6M4 21h16"/></svg>
+          Télécharger
+        </a>
+        <div class="btn-meta" id="dl-meta">Windows 10 / 11 · 64 bits<br><strong>Dernière version</strong> sur GitHub</div>
+      </div>
+      <div class="facts reveal d4">
+        <span class="fact"><b>100 %</b> gratuit</span>
+        <span class="fact">IA <b>locale</b> · Gemma 4</span>
+        <span class="fact">API Bungie <b>officielle</b></span>
+        <span class="fact">Mises à jour <b>automatiques</b></span>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <section id="fonctions">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-num">01 — Fonctions</div>
+        <div>
+          <h2>Ce que fait ton Spectre</h2>
+          <p>Tout s'appuie sur les données officielles de Bungie, mises à jour à chaque patch. Rien n'est inventé à la main : si le jeu change, SpectreIA suit.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card hero-card">
+          <div>
+            <div class="tag">Builds IA</div>
+            <h3>Un build pensé autour de ton exotique</h3>
+            <p>Choisis ta classe, ta sous-classe et ton activité. Gemma 4 analyse l'effet réel de l'armure exotique et construit une boucle cohérente : aspects, fragments, capacités, armes exotiques, mods et stats d'armure.</p>
+          </div>
+          <div class="loop">
+            <span>déclencheur</span> → effet de l'exotique<br>
+            → <span>recharge</span> de la capacité<br>
+            → retour au déclencheur
+          </div>
+          <div class="corner"></div>
+        </article>
+        <article class="card">
+          <div class="tag">God rolls</div>
+          <h3>Tes meilleurs rolls, repérés</h3>
+          <p>Chaque arme est comparée à la wish list communautaire, perks améliorés compris. Les god rolls peuvent être verrouillés automatiquement.</p>
+        </article>
+        <article class="card">
+          <div class="tag">Overlay</div>
+          <h3>En jeu, sans alt-tab</h3>
+          <p>Appuie sur <span class="kbd">Alt</span> + <span class="kbd">S</span> : ton Spectre s'affiche par-dessus Destiny 2, annonce ton butin en fin de mission et répond à tes questions.</p>
+        </article>
+        <article class="card wide">
+          <div class="tag">Inventaire</div>
+          <h3>Coffre et personnages</h3>
+          <p>Tout ton coffre et tes trois personnages au même endroit : transferts, équipement, verrous. Tes verrous posés à la main ne sont jamais touchés.</p>
+        </article>
+        <article class="card wide">
+          <div class="tag">Lore</div>
+          <h3>L'univers, raconté</h3>
+          <p>Pose tes questions sur le Voyageur, le Témoin ou Savathûn. Ton Spectre répond en français, avec des guides de raid et de donjon.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="installation">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-num">02 — Installation</div>
+        <div>
+          <h2>Trois étapes, pas plus</h2>
+          <p>Aucun droit administrateur n'est demandé : SpectreIA s'installe dans ton dossier utilisateur.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Télécharge et lance l'installeur</h3>
+            <p>Il installe SpectreIA et, si besoin, Ollama, le moteur qui fait tourner l'IA sur ton PC.</p>
+            <div class="warn"><strong>Windows peut afficher « Windows a protégé votre ordinateur ».</strong> C'est normal pour une application indépendante non signée. Clique sur <em>Informations complémentaires</em>, puis sur <em>Exécuter quand même</em>.</div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Laisse ton Spectre choisir son cerveau</h3>
+            <p>Au premier lancement, SpectreIA choisit le modèle Gemma 4 adapté à ta machine et le télécharge une seule fois.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Connecte ton compte Bungie</h3>
+            <p>Autorise SpectreIA sur bungie.net, puis clique sur <em>Ouvrir SpectreIA</em> quand ton navigateur le demande. Ton mot de passe n'est jamais vu par l'application.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="config">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-num">03 — Configuration</div>
+        <div>
+          <h2>Ce qu'il te faut</h2>
+          <p>L'IA tourne sur ta carte graphique pendant que tu joues. SpectreIA adapte la taille du modèle à ta machine.</p>
+        </div>
+      </div>
+      <dl class="spec">
+        <div><dt>Système</dt><dd>Windows 10 ou 11<small>64 bits</small></dd></div>
+        <div><dt>Mémoire vive</dt><dd>16 Go conseillés<small>8 Go minimum, avec un modèle réduit</small></dd></div>
+        <div><dt>Carte graphique</dt><dd>6 Go de mémoire vidéo<small>NVIDIA ou AMD récente conseillée</small></dd></div>
+        <div><dt>Espace disque</dt><dd>15 Go environ<small>Application, Ollama et modèle IA</small></dd></div>
+        <div><dt>Compte</dt><dd>Compte Bungie<small>Pour lire ton inventaire</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-num">04 — Questions</div>
+        <div><h2>Questions fréquentes</h2></div>
+      </div>
+      <details>
+        <summary>C'est vraiment gratuit ?</summary>
+        <p>Oui. L'IA tourne sur ton propre PC grâce à Ollama et Gemma 4 : il n'y a aucun serveur à payer, donc rien à te facturer.</p>
+      </details>
+      <details>
+        <summary>Mes données partent-elles quelque part ?</summary>
+        <p>Tes conversations avec ton Spectre restent sur ton PC. Les données de jeu viennent de l'API officielle de Bungie, avec ton autorisation, et l'application ne reçoit jamais ton mot de passe.</p>
+      </details>
+      <details>
+        <summary>Comment se font les mises à jour ?</summary>
+        <p>Automatiquement. SpectreIA vérifie au démarrage, télécharge la nouvelle version en arrière-plan et l'installe au redémarrage. Tu n'as rien à retélécharger.</p>
+      </details>
+      <details>
+        <summary>Est-ce que ça ralentit Destiny 2 ?</summary>
+        <p>L'IA ne calcule que lorsque tu lui demandes quelque chose. Entre deux demandes, elle garde seulement un peu de mémoire vidéo réservée. Sur une machine modeste, SpectreIA choisit un modèle plus léger.</p>
+      </details>
+      <details>
+        <summary>Est-ce autorisé par Bungie ?</summary>
+        <p>SpectreIA utilise uniquement l'API publique officielle de Bungie, comme les autres applications compagnons. Il ne lit ni ne modifie jamais le jeu lui-même.</p>
+      </details>
+    </div>
+  </section>
+
+  <div class="wrap final">
+    <h2>Prêt, Gardien ?</h2>
+    <a class="btn" href="https://github.com/Davvou-Ai/SpectreIA/releases/latest" data-dl>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M6 11l6 6 6-6M4 21h16"/></svg>
+      Télécharger SpectreIA
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>SpectreIA est un projet de fan indépendant, non affilié à Bungie. Destiny 2 est une marque de Bungie, Inc.</span>
+    <span><a href="https://github.com/Davvou-Ai/SpectreIA/releases">Toutes les versions</a></span>
+  </div>
+</footer>
+
+<script>
+  // Lien direct vers l'installeur de la dernière version (repli : page des versions)
+  fetch('https://api.github.com/repos/Davvou-Ai/SpectreIA/releases/latest')
+    .then(r => r.ok ? r.json() : null)
+    .then(rel => {
+      if (!rel) return
+      const exe = (rel.assets || []).find(a => /\.exe$/i.test(a.name))
+      if (!exe) return
+      document.querySelectorAll('#dl, [data-dl]').forEach(a => { a.href = exe.browser_download_url })
+      const mo = Math.round(exe.size / 1e6)
+      const date = new Date(rel.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+      document.getElementById('dl-meta').innerHTML =
+        'Windows 10 / 11 · 64 bits · ' + mo + ' Mo<br><strong>Version ' + rel.tag_name.replace(/^v/, '') + '</strong> du ' + date
+    })
+    .catch(() => {})
+</script>
+</body>
+</html>
