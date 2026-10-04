@@ -1,0 +1,488 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SpectreIA · Informations légales</title>
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+  /* ── Thèmes : Lumière sur :root, Ombre selon le système ou le choix du visiteur ─────────────────────────── */
+  :root {
+    --bg: #EFECE6; --bg-2: #E6E1D7; --glass: rgba(255,253,249,.62); --glass-2: rgba(255,253,249,.82);
+    --ink: #1A1814; --ink-2: rgba(26,24,20,.72); --ink-3: rgba(26,24,20,.52);
+    --line: rgba(26,24,20,.10); --line-2: rgba(26,24,20,.18);
+    --accent: #C87818; --accent-ink: #98580B; --accent-rgb: 200,120,28; --on-accent: #fff;
+    --glow: rgba(200,120,28,.28); --shadow: 0 30px 80px -30px rgba(80,50,15,.35);
+    --grain: .035;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #050A07; --bg-2: #08110C; --glass: rgba(14,26,19,.55); --glass-2: rgba(14,26,19,.8);
+      --ink: #E8E2D6; --ink-2: rgba(232,226,214,.72); --ink-3: rgba(232,226,214,.50);
+      --line: rgba(120,230,160,.10); --line-2: rgba(120,230,160,.20);
+      --accent: #22C45A; --accent-ink: #45E07C; --accent-rgb: 34,196,90; --on-accent: #03110A;
+      --glow: rgba(34,196,90,.30); --shadow: 0 30px 90px -30px rgba(0,0,0,.8);
+      --grain: .05;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #050A07; --bg-2: #08110C; --glass: rgba(14,26,19,.55); --glass-2: rgba(14,26,19,.8);
+    --ink: #E8E2D6; --ink-2: rgba(232,226,214,.72); --ink-3: rgba(232,226,214,.50);
+    --line: rgba(120,230,160,.10); --line-2: rgba(120,230,160,.20);
+    --accent: #22C45A; --accent-ink: #45E07C; --accent-rgb: 34,196,90; --on-accent: #03110A;
+    --glow: rgba(34,196,90,.30); --shadow: 0 30px 90px -30px rgba(0,0,0,.8);
+    --grain: .05;
+  }
+  /* Captures de l'app : celles du thème affiché */
+  .th-dark { display: none; } .th-light { display: block; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .th-dark { display: block; } :root:not([data-theme="light"]) .th-light { display: none; } }
+  :root[data-theme="dark"] .th-dark { display: block; } :root[data-theme="dark"] .th-light { display: none; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.62 "Barlow", "Segoe UI", system-ui, sans-serif; padding-inline: 20px; overflow-x: hidden; transition: background-color .6s ease, color .6s ease; }
+  body::before { /* lueur d'ambiance qui suit le thème */
+    content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background: radial-gradient(1100px 700px at 78% -8%, var(--glow), transparent 62%), radial-gradient(900px 600px at -10% 40%, rgba(var(--accent-rgb), .08), transparent 60%);
+    transition: background .6s ease; }
+  .wrap { max-width: 1180px; margin-inline: auto; }
+  h1, h2, h3, .display { font-family: "Rajdhani", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.04; text-wrap: balance; margin: 0; }
+  h2 { font-size: clamp(32px, 4.6vw, 52px); letter-spacing: -.005em; }
+  h3 { font-size: 21px; letter-spacing: .01em; }
+  p { margin: 0; }
+  a { color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .eyebrow { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .28em; text-transform: uppercase; color: var(--accent-ink); display: inline-flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; background: currentColor; transform: rotate(45deg); }
+  .lead { font-size: 18.5px; color: var(--ink-2); max-width: 58ch; }
+  .muted { color: var(--ink-3); }
+  kbd { font-family: "Rajdhani", sans-serif; font-weight: 700; letter-spacing: .04em; }
+
+  /* Verre dépoli : les surfaces flottent sur la lueur */
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2); border-radius: 22px; transition: background-color .6s ease, border-color .6s ease; }
+
+  /* Apparition au défilement : visible par défaut, animé là où le navigateur sait le faire */
+  @supports (animation-timeline: view()) {
+    .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    @keyframes rise { from { opacity: 0; transform: translateY(40px) scale(.98); } to { opacity: 1; transform: none; } }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+  /* ── En-tête ────────────────────────────────────────────────────────────────────────────── */
+  header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; padding-block: 14px; }
+  .bar { display: flex; align-items: center; gap: 18px; padding: 10px 12px 10px 16px; border-radius: 18px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .brand img { width: 30px; height: 30px; }
+  .brand span { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 19px; letter-spacing: .2em; }
+  nav.links { display: flex; gap: 4px; margin-left: 8px; }
+  nav.links a { color: var(--ink-2); text-decoration: none; font-weight: 500; font-size: 15px; padding: 7px 12px; border-radius: 10px; transition: background-color .25s, color .25s; }
+  nav.links a:hover { color: var(--ink); background: rgba(var(--accent-rgb), .10); }
+  .bar .right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .theme { position: relative; display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+  .theme button { position: relative; z-index: 1; border: 0; background: transparent; color: var(--ink-3); font: 600 13px "Barlow", sans-serif; padding: 6px 12px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: color .35s; }
+  .theme button[aria-pressed="true"] { color: var(--on-accent); }
+  .theme .pill { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 999px; background: var(--accent); transition: transform .45s cubic-bezier(.2,.8,.2,1), background-color .6s; }
+  .theme[data-on="light"] .pill { transform: translateX(100%); }
+  .shots { display: grid; gap: 16px; }
+  .shot-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .shot-tabs button { border: 1px solid var(--line); background: transparent; color: var(--ink-2); font: 600 14px "Barlow", sans-serif; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all .25s; }
+  .shot-tabs button:hover { color: var(--ink); border-color: var(--accent); }
+  .shot-tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .shot-frame { margin: 0; display: grid; gap: 12px; }
+  .shot-zoom { padding: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--bg); cursor: zoom-in; box-shadow: var(--shadow); display: block; width: 100%; }
+  .shot-zoom img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; transition: opacity .35s ease; }
+  .shot-zoom img.fading { opacity: .15; }
+  .shot-frame figcaption { color: var(--ink-2); font-size: 15px; max-width: 70ch; }
+  .shot-view { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.86); display: grid; place-items: center; padding: 24px 16px; cursor: zoom-out; }
+  .shot-view[hidden] { display: none; }
+  .shot-view img { max-width: 100%; max-height: 100%; border-radius: 12px; }
+  .shot-view button { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.5); color: #fff; font-size: 22px; cursor: pointer; }
+  .lang { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+  .lang button { border: 0; background: transparent; color: var(--ink-3); font: 700 12px "Rajdhani", sans-serif; letter-spacing: .08em; padding: 6px 9px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--line); color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: 700 15px "Rajdhani", sans-serif; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding: 14px 24px; border-radius: 14px; border: 1px solid transparent; cursor: pointer; transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .3s, background-color .6s, color .3s, border-color .3s; }
+  .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 10px 34px -8px var(--glow), inset 0 1px 0 rgba(255,255,255,.25); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -10px var(--glow), inset 0 1px 0 rgba(255,255,255,.25); }
+  .btn-ghost { border-color: var(--line-2); color: var(--ink); background: var(--glass); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .btn-sm { padding: 9px 15px; font-size: 13px; border-radius: 11px; }
+  @media (max-width: 900px) { nav.links { display: none; } }
+  @media (max-width: 520px) { .bar .btn-sm { display: none; } .theme button span { display: none; } }
+  @media (max-width: 520px) { .brand span { white-space: nowrap; letter-spacing: .12em; font-size: 15px; } .lang button { padding: 6px 7px; } }
+  @media (max-width: 380px) { .brand span { display: none; } }
+
+  /* ── Hero : le Spectre en 3D ───────────────────────────────────────────────────────────── */
+  .hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; padding-block: 40px 70px; min-height: 620px; }
+  .hero h1 { font-size: clamp(46px, 7vw, 88px); letter-spacing: -.01em; }
+  .hero h1 .grad { background: linear-gradient(100deg, var(--accent-ink), var(--ink) 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero .lead { margin-top: 22px; }
+  .intro > * { animation: fadeUp .9s cubic-bezier(.2,.8,.2,1) both; }
+  .intro > *:nth-child(2) { animation-delay: .08s; } .intro > *:nth-child(3) { animation-delay: .16s; } .intro > *:nth-child(4) { animation-delay: .24s; } .intro > *:nth-child(5) { animation-delay: .32s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; align-items: center; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .facts span { font-size: 14px; color: var(--ink-2); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--glass); display: inline-flex; align-items: center; gap: 8px; }
+  .facts span::before { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .stage { position: relative; aspect-ratio: 1; max-width: 560px; width: 100%; justify-self: center; }
+  .stage::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(var(--accent-rgb), .30), transparent 65%); filter: blur(10px); animation: breathe 5s ease-in-out infinite; }
+  .stage .rings { position: absolute; inset: 0; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 46px, var(--line) 47px 48px); mask-image: radial-gradient(circle, #000 25%, transparent 70%); animation: spin 90s linear infinite; }
+  @keyframes breathe { 50% { transform: scale(1.06); opacity: .8; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .stage canvas, .stage img.fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .stage img.fallback { object-fit: contain; padding: 18%; transition: opacity .8s ease; }
+  .stage.ready img.fallback { opacity: 0; }
+  .stage .ask { position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%); white-space: nowrap; }
+  .stage .ask::after { content: ""; position: absolute; left: 50%; top: -8px; width: 12px; height: 12px; background: inherit; border-left: 1px solid var(--line); border-top: 1px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: 0; padding-block: 24px 50px; } .stage { max-width: 420px; order: -1; } }
+
+  section { padding-block: 90px; }
+  .sec-head { display: grid; gap: 14px; margin-bottom: 42px; max-width: 760px; }
+
+  /* ── Démo : vraies captures de l'app ─────────────────────────────────────────────── */
+
+  /* ── Fonctionnalités : grille « bento » ───────────────────────────────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .tile { position: relative; padding: 26px; display: grid; gap: 10px; align-content: start; overflow: hidden; transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .3s, background-color .6s; }
+  .tile:hover { transform: translateY(-4px); border-color: rgba(var(--accent-rgb), .45); }
+  .tile::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 0%), rgba(var(--accent-rgb), .12), transparent 40%); }
+  .tile:hover::after { opacity: 1; }
+  .tile p { color: var(--ink-2); font-size: 15.5px; }
+  .tile .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; color: var(--accent-ink); background: rgba(var(--accent-rgb), .12); border: 1px solid rgba(var(--accent-rgb), .22); }
+  .tile .ic svg { width: 22px; height: 22px; }
+  .t-big { grid-column: span 4; grid-row: span 2; }
+  .t-big .shot { margin-top: 14px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); transform: perspective(1200px) rotateX(6deg); transform-origin: top center; transition: transform .6s cubic-bezier(.2,.8,.2,1); box-shadow: var(--shadow); }
+  .t-big:hover .shot { transform: perspective(1200px) rotateX(0deg); }
+  .t-big .shot img { display: block; width: 100%; height: auto; }
+  .t-2 { grid-column: span 2; }
+  .t-3 { grid-column: span 3; }
+  @media (max-width: 960px) { .bento { grid-template-columns: repeat(2, 1fr); } .t-big { grid-column: span 2; grid-row: auto; } .t-2, .t-3 { grid-column: span 1; } }
+  @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .t-big, .t-2, .t-3 { grid-column: span 1; } }
+
+  /* ── Raccourcis ─────────────────────────────────────────────────────────────────────── */
+  .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .key { padding: 20px; display: grid; gap: 12px; align-content: start; }
+  .caps { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .cap { font: 700 15px "Rajdhani", sans-serif; letter-spacing: .06em; min-width: 38px; text-align: center; padding: 7px 11px; border-radius: 10px; color: var(--ink);
+    background: linear-gradient(180deg, var(--glass-2), var(--glass)); border: 1px solid var(--line-2); box-shadow: 0 4px 0 var(--line-2); transition: transform .12s, box-shadow .12s; }
+  .key:hover .cap { transform: translateY(3px); box-shadow: 0 1px 0 var(--line-2); }
+  .caps .plus { color: var(--ink-3); font-weight: 600; }
+  .key strong { font-weight: 600; font-size: 16.5px; }
+  .key p { color: var(--ink-2); font-size: 14.5px; }
+
+  /* ── Engagements ───────────────────────────────────────────────────────────────────── */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pillar { padding: 30px 26px; display: grid; gap: 10px; }
+  .pillar .display { font-size: clamp(36px, 4vw, 48px); background: linear-gradient(120deg, var(--accent-ink), var(--ink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pillar p { color: var(--ink-2); }
+  @media (max-width: 800px) { .pillars { grid-template-columns: 1fr; } }
+
+  /* ── Installation ─────────────────────────────────────────────────────────────────── */
+  .install { display: grid; grid-template-columns: 1.25fr 1fr; gap: 30px; align-items: start; }
+  ol.steps { list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 26px; counter-reset: s; }
+  ol.steps::before { content: ""; position: absolute; left: 23px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient(var(--accent), transparent); opacity: .5; }
+  ol.steps li { counter-increment: s; position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 16px; }
+  ol.steps li::before { content: counter(s); position: relative; font: 700 21px "Rajdhani", sans-serif; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--accent-ink); border: 2px solid var(--accent); box-shadow: 0 0 22px -4px var(--glow); }
+  ol.steps p { color: var(--ink-2); font-size: 15.5px; margin-top: 4px; }
+  .req { padding: 6px 0; overflow: hidden; }
+  .req h3 { padding: 18px 22px 10px; }
+  .req dl { margin: 0; display: grid; }
+  .req .row { display: grid; grid-template-columns: 40% 1fr; gap: 12px; padding: 12px 22px; border-top: 1px solid var(--line); font-size: 15px; }
+  .req dt { color: var(--ink-3); font-weight: 600; } .req dd { margin: 0; }
+  .tiers { display: grid; gap: 8px; padding: 16px 22px 20px; border-top: 1px solid var(--line); }
+  .tier { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; flex-wrap: wrap; }
+  @media (max-width: 880px) { .install { grid-template-columns: 1fr; } }
+
+  /* ── Aide et FAQ (ouverture en douceur) ───────────────────────────────────────────── */
+  .help { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .qa { border-radius: 16px; margin-bottom: 10px; }
+  .qa button.q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; text-align: left; background: transparent; border: 0; color: var(--ink); font: 600 16px "Barlow", sans-serif; padding: 17px 20px; cursor: pointer; }
+  .qa .chev { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-2); transition: transform .4s cubic-bezier(.2,.8,.2,1), background-color .3s; }
+  .qa.open .chev { transform: rotate(45deg); background: rgba(var(--accent-rgb), .15); }
+  .qa .ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.2,.8,.2,1); }
+  .qa.open .ans { grid-template-rows: 1fr; }
+  .qa .ans > div { overflow: hidden; }
+  .qa .ans p { padding: 0 20px 18px; color: var(--ink-2); font-size: 15.5px; }
+  .col-title { font: 700 13px "Rajdhani", sans-serif; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  @media (max-width: 880px) { .help { grid-template-columns: 1fr; } }
+
+  .community { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: center; padding: 34px; }
+  @media (max-width: 760px) { .community { grid-template-columns: 1fr; padding: 26px; } }
+
+  /* ── Contact ───────────────────────────────────────────────────────────────────────── */
+  .contact { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; align-items: start; }
+  .contact form { padding: 28px; display: grid; gap: 18px; position: relative; }
+  .field { display: grid; gap: 8px; }
+  .field label { font: 700 13px "Rajdhani", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+  .field label .muted { text-transform: none; letter-spacing: 0; font: 400 13px "Barlow", sans-serif; }
+  .contact select, .contact textarea, .contact input[type="email"] { width: 100%; border: 1px solid var(--line-2); background: var(--glass-2); color: var(--ink); font: 16px "Barlow", sans-serif; padding: 12px 14px; border-radius: 12px; outline: none; transition: border-color .25s, box-shadow .25s; }
+  .contact textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+  .contact select:focus, .contact textarea:focus, .contact input[type="email"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .18); }
+  .contact .fine { font-size: 13.5px; color: var(--ink-3); }
+  .contact .send { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .contact .send button { border: 0; cursor: pointer; }
+  .contact .send button[disabled] { opacity: .6; cursor: progress; }
+  #c-status { font-size: 15px; color: var(--ink-2); }
+  #c-status.ok { color: var(--accent-ink); } #c-status.bad { color: #E5534B; }
+  .contact aside { padding: 26px; display: grid; gap: 14px; }
+  .contact aside ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .contact aside li { display: grid; gap: 2px; }
+  .contact aside li span { font-size: 14px; color: var(--ink-3); }
+  .contact aside a { font-weight: 600; text-decoration: none; }
+  .contact aside a:hover { text-decoration: underline; }
+  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } .contact form, .contact aside { padding: 22px; } }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .foot-links a { color: var(--ink-2); text-decoration: none; } .foot-links a:hover { color: var(--accent-ink); text-decoration: underline; }
+  footer { padding-block: 40px 56px; color: var(--ink-3); font-size: 14px; display: grid; gap: 8px; border-top: 1px solid var(--line); }
+
+  /* ── Assistant : le Spectre qui répond aux questions ─────────────────────────────── */
+  .fab { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 30; width: 66px; height: 66px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--glass-2); backdrop-filter: blur(12px); cursor: pointer; display: grid; place-items: center; box-shadow: 0 14px 40px -10px var(--glow); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+  .fab:hover { transform: translateY(-3px) scale(1.04); }
+  .fab img { width: 44px; height: 44px; animation: bob 4s ease-in-out infinite; }
+  .fab .dot { position: absolute; top: 4px; right: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  @keyframes bob { 50% { transform: translateY(-4px) rotate(4deg); } }
+  .chat { position: fixed; right: 20px; bottom: calc(100px + env(safe-area-inset-bottom, 0px)); z-index: 31; width: min(390px, calc(100vw - 40px)); height: min(600px, calc(100vh - 140px)); display: flex; flex-direction: column; border-radius: 24px; overflow: hidden; background: var(--glass-2); border: 1px solid var(--line-2); backdrop-filter: blur(22px) saturate(1.3); box-shadow: var(--shadow);
+    transform-origin: bottom right; opacity: 0; transform: translateY(16px) scale(.96); pointer-events: none; transition: opacity .35s ease, transform .45s cubic-bezier(.2,.8,.2,1); }
+  .chat.open { opacity: 1; transform: none; pointer-events: auto; }
+  .chat-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .chat-head .mini { width: 52px; height: 52px; position: relative; flex-shrink: 0; }
+  .chat-head .mini canvas, .chat-head .mini img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .chat-head .mini img { object-fit: contain; padding: 6px; }
+  .chat-head .mini.ready img { opacity: 0; }
+  .chat-head b { font: 700 17px "Rajdhani", sans-serif; letter-spacing: .12em; display: block; }
+  .chat-head small { color: var(--ink-3); font-size: 12.5px; }
+  .chat-head .x { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .msgs { flex: 1; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; }
+  .msg { max-width: 88%; padding: 10px 13px; border-radius: 16px; font-size: 14.5px; line-height: 1.5; animation: pop .35s cubic-bezier(.2,.8,.2,1) both; }
+  .msg.bot { background: rgba(var(--accent-rgb), .10); border: 1px solid rgba(var(--accent-rgb), .20); border-bottom-left-radius: 6px; }
+  .msg.me { margin-left: auto; background: var(--accent); color: var(--on-accent); border-bottom-right-radius: 6px; }
+  .msg.typing { display: inline-flex; gap: 4px; }
+  .msg.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1s infinite; }
+  .msg.typing i:nth-child(2) { animation-delay: .15s; } .msg.typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes blink { 50% { opacity: .25; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 10px; }
+  .chip { border: 1px solid var(--line-2); background: transparent; color: var(--ink); font: 500 13px "Barlow", sans-serif; padding: 7px 11px; border-radius: 999px; cursor: pointer; transition: background-color .25s, border-color .25s; text-align: left; }
+  .chip:hover { background: rgba(var(--accent-rgb), .12); border-color: var(--accent); }
+  .chat form { display: flex; gap: 8px; padding: 10px 12px 12px; border-top: 1px solid var(--line); }
+  .chat input { flex: 1; min-width: 0; border: 1px solid var(--line-2); background: transparent; color: var(--ink); font: 15px "Barlow", sans-serif; padding: 10px 12px; border-radius: 12px; outline: none; }
+  .chat input:focus { border-color: var(--accent); }
+  .chat form button { border: 0; background: var(--accent); color: var(--on-accent); width: 42px; border-radius: 12px; cursor: pointer; display: grid; place-items: center; }
+
+  /* ── Page légale ───────────────────────────────────────────────────────────────────── */
+  .legal-wrap { max-width: 780px; margin-inline: auto; padding-block: 40px 90px; }
+  .legal-wrap > h1 { font-size: clamp(36px, 6vw, 60px); margin-bottom: 8px; }
+  .legal-wrap .upd { color: var(--ink-3); font-size: 14px; margin-bottom: 30px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+  .toc a { text-decoration: none; color: var(--ink); border: 1px solid var(--line-2); background: var(--glass); padding: 8px 16px; border-radius: 999px; font: 700 13px "Rajdhani", sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: border-color .3s, transform .3s; }
+  .toc a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .doc { padding-block: 0 56px; scroll-margin-top: 90px; }
+  .doc h2 { font-size: clamp(28px, 4vw, 38px); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .doc h3 { font-size: 19px; margin: 26px 0 8px; color: var(--accent-ink); }
+  .doc p, .doc li { color: var(--ink-2); font-size: 16px; }
+  .doc p + p { margin-top: 12px; }
+  .doc ul + p { margin-top: 14px; }
+  .doc ul { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; }
+  .doc dl { margin: 10px 0 0; display: grid; gap: 10px; }
+  .doc dt { font-weight: 600; color: var(--ink); }
+  .doc dd { margin: 0; color: var(--ink-2); }
+  .note { border: 1px solid var(--line-2); background: var(--glass); border-radius: 14px; padding: 14px 18px; color: var(--ink-2); margin-top: 16px; }
+  [data-l] { display: none; } html[lang="fr"] [data-l="fr"], html[lang="en"] [data-l="en"] { display: block; }
+  html[lang="fr"] span[data-l="fr"], html[lang="en"] span[data-l="en"] { display: inline; }
+  .back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px; text-decoration: none; color: var(--ink-2); font-weight: 500; }
+  .back:hover { color: var(--accent-ink); }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar glass">
+      <a class="brand" href="index.html"><img alt="" src="data:image/png;base64,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"><span>SPECTRE IA</span></a>
+      <div class="right">
+        <div class="theme" id="theme" role="group" aria-label="Thème du site / Site theme">
+          <span class="pill" aria-hidden="true"></span>
+          <button id="t-ombre" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7Z" fill="currentColor"/></svg><span>Ombre</span></button>
+          <button id="t-lumiere" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M13 3l-1.4 1.4M4.4 11.6 3 13"/></g></svg><span>Lumière</span></button>
+        </div>
+        <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr">FR</button><button type="button" data-lang="en">EN</button></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap legal-wrap">
+  <a class="back" href="index.html"><span data-l="fr">← Retour au site</span><span data-l="en">← Back to the site</span></a>
+  <h1><span data-l="fr">Informations légales</span><span data-l="en">Legal information</span></h1>
+  <p class="upd"><span data-l="fr">Dernière mise à jour : 4 octobre 2026</span><span data-l="en">Last updated: October 4, 2026</span></p>
+  <nav class="toc" aria-label="Sommaire">
+    <a href="#mentions"><span data-l="fr">Mentions légales</span><span data-l="en">Legal notice</span></a>
+    <a href="#conditions"><span data-l="fr">Conditions d'utilisation</span><span data-l="en">Terms of use</span></a>
+    <a href="#confidentialite"><span data-l="fr">Confidentialité</span><span data-l="en">Privacy</span></a>
+  </nav>
+
+  <!-- ═════════════════════════════ MENTIONS LÉGALES ═════════════════════════════ -->
+  <section class="doc" id="mentions">
+    <div data-l="fr">
+      <h2>Mentions légales</h2>
+      <h3>Qui édite SpectreIA</h3>
+      <p>Ce site et l'application SpectreIA sont édités à titre personnel, sans but lucratif, par <b>Davvou-Ai</b> (pseudonyme). Directeur de la publication : Davvou-Ai.</p>
+      <p>L'éditeur est une personne non professionnelle. Comme la loi française l'autorise (article 6, III, 2° de la loi du 21 juin 2004 pour la confiance dans l'économie numérique), il n'affiche pas son identité civile ici et l'a communiquée à l'hébergeur du site.</p>
+      <p>Pour le joindre : <a data-mail href="#">e-mail</a> ou le <a href="index.html#contact">formulaire de contact</a>.</p>
+      <h3>Hébergement</h3>
+      <dl>
+        <div><dt>Site et téléchargements</dt><dd>GitHub Pages et GitHub Releases, par GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</dd></div>
+        <div><dt>Messages du formulaire de contact</dt><dd>Cloudflare Workers, par Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, États-Unis.</dd></div>
+      </dl>
+      <h3>Marques et propriété</h3>
+      <p>SpectreIA est un projet de fan indépendant. Il n'est ni affilié à Bungie, ni approuvé ou sponsorisé par Bungie. Destiny, Destiny 2 et les noms, images et univers du jeu sont la propriété de Bungie, Inc. Les données de jeu proviennent de l'API officielle de Bungie (bungie.net).</p>
+      <p>Les noms light.gg et D2Gunsmith appartiennent à leurs propriétaires respectifs. SpectreIA n'est lié à aucun d'eux.</p>
+      <p>Le nom « SpectreIA », le logo et le code de l'application sont l'œuvre de leur éditeur. Les éléments venant du jeu restent à Bungie.</p>
+    </div>
+    <div data-l="en">
+      <h2>Legal notice</h2>
+      <h3>Who publishes SpectreIA</h3>
+      <p>This website and the SpectreIA application are published as a personal, non-profit project by <b>Davvou-Ai</b> (a pseudonym). Publication director: Davvou-Ai.</p>
+      <p>The publisher is a private individual. As French law allows (article 6, III, 2 of the law of June 21, 2004), their civil identity is not shown here and has been given to the site's host.</p>
+      <p>To reach them: <a data-mail href="#">email</a> or the <a href="index.html#contact">contact form</a>.</p>
+      <h3>Hosting</h3>
+      <dl>
+        <div><dt>Website and downloads</dt><dd>GitHub Pages and GitHub Releases, by GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</dd></div>
+        <div><dt>Contact form messages</dt><dd>Cloudflare Workers, by Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA.</dd></div>
+      </dl>
+      <h3>Trademarks and ownership</h3>
+      <p>SpectreIA is an independent fan project. It is not affiliated with, endorsed or sponsored by Bungie. Destiny, Destiny 2 and the game's names, images and universe belong to Bungie, Inc. Game data comes from Bungie's official API (bungie.net).</p>
+      <p>light.gg and D2Gunsmith belong to their respective owners. SpectreIA has no link with either of them.</p>
+      <p>The name "SpectreIA", the logo and the application code are the work of their publisher. Anything that comes from the game remains Bungie's.</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ CONDITIONS D'UTILISATION ═════════════════════════════ -->
+  <section class="doc" id="conditions">
+    <div data-l="fr">
+      <h2>Conditions d'utilisation</h2>
+      <p>En installant ou en utilisant SpectreIA, tu acceptes ces conditions. Si elles ne te conviennent pas, n'utilise pas l'application.</p>
+      <h3>1. Ce que c'est</h3>
+      <p>SpectreIA est une application gratuite pour Windows qui aide à gérer son compte Destiny 2 : inventaire, god rolls, builds, guides, marchands, overlays. Elle utilise l'API officielle de Bungie, avec ton autorisation.</p>
+      <h3>2. Usage</h3>
+      <ul>
+        <li>L'application est gratuite et réservée à un usage personnel et non commercial.</li>
+        <li>Tu ne dois pas la revendre, ni redistribuer une version modifiée de l'installateur.</li>
+        <li>Tu restes soumis aux conditions d'utilisation de Bungie et de Destiny 2. SpectreIA ne les remplace pas.</li>
+      </ul>
+      <h3>3. Ton compte Bungie</h3>
+      <p>SpectreIA ne lit pas la mémoire du jeu et ne modifie aucun fichier du jeu : elle passe uniquement par l'API publique de Bungie. Bungie peut changer cette API, la limiter ou la fermer, et une partie des fonctions peut alors cesser de marcher sans prévenir. Tu peux retirer l'accès à tout moment depuis ton compte sur bungie.net.</p>
+      <h3>4. L'intelligence artificielle</h3>
+      <p>Le Spectre répond grâce à une IA qui tourne sur ton PC. Elle peut se tromper ou inventer. Vérifie avant une décision que tu ne pourras pas annuler, par exemple démanteler une arme. Les actions que SpectreIA fait sur ton inventaire (verrouiller, équiper, appliquer un style) se font à ta demande ou selon les réglages que tu as choisis. Tu en restes responsable.</p>
+      <h3>5. Pas de garantie</h3>
+      <p>SpectreIA est fournie « en l'état », sans garantie qu'elle soit toujours disponible ou sans erreur. Dans les limites permises par la loi, l'éditeur n'est pas responsable des dommages indirects, ni de la perte d'objets de jeu ou de données. Rien ici ne limite les droits que la loi te donne en tant que consommateur.</p>
+      <h3>6. Mises à jour</h3>
+      <p>L'application se met à jour toute seule. L'éditeur peut modifier, ajouter ou retirer des fonctions, ou arrêter le projet.</p>
+      <h3>7. Messages envoyés à l'éditeur</h3>
+      <p>Tu es responsable de ce que tu écris dans le formulaire de contact. Pas de contenu illégal, injurieux ou qui vise quelqu'un.</p>
+      <h3>8. Droit applicable</h3>
+      <p>Ces conditions sont régies par le droit français. En cas de désaccord, on essaie d'abord de s'arranger à l'amiable ; à défaut, les tribunaux français sont compétents, sans préjudice des règles protégeant les consommateurs.</p>
+    </div>
+    <div data-l="en">
+      <h2>Terms of use</h2>
+      <p>By installing or using SpectreIA, you accept these terms. If you don't agree with them, don't use the application.</p>
+      <h3>1. What it is</h3>
+      <p>SpectreIA is a free Windows application that helps you manage your Destiny 2 account: inventory, god rolls, builds, guides, vendors, overlays. It uses Bungie's official API, with your permission.</p>
+      <h3>2. Use</h3>
+      <ul>
+        <li>The application is free and for personal, non-commercial use only.</li>
+        <li>You must not resell it or redistribute a modified version of the installer.</li>
+        <li>You remain bound by Bungie's and Destiny 2's terms. SpectreIA does not replace them.</li>
+      </ul>
+      <h3>3. Your Bungie account</h3>
+      <p>SpectreIA does not read the game's memory and does not modify any game file: it only goes through Bungie's public API. Bungie can change, limit or shut down this API, and some features may then stop working without notice. You can remove access at any time from your account on bungie.net.</p>
+      <h3>4. Artificial intelligence</h3>
+      <p>Your Ghost answers using an AI that runs on your PC. It can be wrong or make things up. Check before any decision you can't undo, such as dismantling a weapon. Actions SpectreIA takes on your inventory (locking, equipping, applying a style) happen at your request or according to the settings you chose. You remain responsible for them.</p>
+      <h3>5. No warranty</h3>
+      <p>SpectreIA is provided "as is", with no guarantee that it will always be available or error-free. To the extent the law allows, the publisher is not liable for indirect damages, or for the loss of game items or data. Nothing here limits the rights the law gives you as a consumer.</p>
+      <h3>6. Updates</h3>
+      <p>The application updates itself. The publisher may change, add or remove features, or stop the project.</p>
+      <h3>7. Messages sent to the publisher</h3>
+      <p>You are responsible for what you write in the contact form. No illegal or abusive content, nothing that targets a person.</p>
+      <h3>8. Governing law</h3>
+      <p>These terms are governed by French law. If there is a disagreement, we first try to settle it amicably; failing that, French courts have jurisdiction, without prejudice to consumer protection rules.</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ CONFIDENTIALITÉ ═════════════════════════════ -->
+  <section class="doc" id="confidentialite">
+    <div data-l="fr">
+      <h2>Confidentialité</h2>
+      <p>SpectreIA n'a pas de compte à créer, pas de serveur à elle, pas de statistiques, pas de publicité. Voici ce qui se passe exactement.</p>
+      <h3>L'application</h3>
+      <p>Ces données restent sur ton PC et ne sont jamais envoyées à l'éditeur : l'autorisation donnée par Bungie, tes réglages, tes conversations avec le Spectre, les données du jeu mises en mémoire et tes marques d'inventaire. Elles se trouvent dans le dossier de données de l'application (<code>%APPDATA%\spectre-ia</code>). Désinstaller l'application puis supprimer ce dossier efface tout.</p>
+      <p>L'IA tourne sur ton ordinateur : tes questions ne partent sur aucun serveur.</p>
+      <p>Le micro ne sert que pour « parler au Spectre » : il écoute quand tu maintiens la touche choisie, ou quand tu dis le mot de réveil si tu l'as activé. Le son est traité sur ton PC et n'est pas envoyé ailleurs.</p>
+      <h3>Les connexions de l'application</h3>
+      <ul>
+        <li><b>Bungie</b> (bungie.net) : pour lire ton compte et les données du jeu, avec ton autorisation. Tu peux la retirer sur bungie.net.</li>
+        <li><b>GitHub</b> : pour chercher et télécharger les mises à jour. GitHub voit ton adresse IP.</li>
+        <li><b>light.gg et D2Gunsmith</b> : l'application demande leurs pages publiques d'une arme (seul le numéro de l'arme est envoyé).</li>
+        <li><b>Ollama et Hugging Face</b> : si tu choisis une IA ou un modèle de reconnaissance vocale à télécharger.</li>
+      </ul>
+      <p>Chacun de ces services voit ton adresse IP et applique sa propre politique.</p>
+      <h3>Le site</h3>
+      <p>Le site n'utilise ni cookie, ni outil de mesure d'audience. Ton navigateur garde seulement ton choix de thème et de langue, sur ton appareil. Quand la page se charge, trois services reçoivent ton adresse IP : Google Fonts (les polices), jsDelivr (une bibliothèque d'affichage 3D) et l'API de GitHub (pour trouver le dernier installateur).</p>
+      <h3>Le formulaire de contact et l'e-mail</h3>
+      <p>Si tu écris via le formulaire, je reçois ton message, son type, la langue de la page et ton adresse e-mail si tu la laisses. Je m'en sers uniquement pour te répondre et améliorer SpectreIA. Le message est stocké chez Cloudflare jusqu'à ce que je le traite, puis je le supprime, au plus tard 12 mois après. Ton adresse IP n'est pas conservée : seule une empreinte brouillée, effacée au bout d'une heure, sert à limiter le nombre d'envois. Rien n'est vendu ni partagé. Si tu m'écris directement par e-mail, c'est ton fournisseur de messagerie et le mien qui gardent le message.</p>
+      <h3>Tes droits</h3>
+      <p>Tu peux demander à voir, corriger ou supprimer les données que je détiens sur toi, ou t'opposer à leur usage, en m'écrivant à <a data-mail href="#">l'adresse e-mail de contact</a>. Si tu estimes que ça ne suffit pas, tu peux saisir la CNIL (cnil.fr).</p>
+    </div>
+    <div data-l="en">
+      <h2>Privacy</h2>
+      <p>SpectreIA has no account to create, no server of its own, no analytics and no ads. Here is exactly what happens.</p>
+      <h3>The application</h3>
+      <p>This data stays on your PC and is never sent to the publisher: the permission granted by Bungie, your settings, your conversations with the Ghost, cached game data and your inventory marks. It lives in the application's data folder (<code>%APPDATA%\spectre-ia</code>). Uninstalling the app and deleting that folder erases everything.</p>
+      <p>The AI runs on your computer: your questions are not sent to any server.</p>
+      <p>The microphone is only used to "talk to your Ghost": it listens while you hold the chosen key, or when you say the wake word if you turned it on. The sound is processed on your PC and is not sent anywhere else.</p>
+      <h3>The application's connections</h3>
+      <ul>
+        <li><b>Bungie</b> (bungie.net): to read your account and game data, with your permission. You can withdraw it on bungie.net.</li>
+        <li><b>GitHub</b>: to look for and download updates. GitHub sees your IP address.</li>
+        <li><b>light.gg and D2Gunsmith</b>: the app requests their public page for a weapon (only the weapon's number is sent).</li>
+        <li><b>Ollama and Hugging Face</b>: if you choose an AI or a speech recognition model to download.</li>
+      </ul>
+      <p>Each of these services sees your IP address and applies its own policy.</p>
+      <h3>The website</h3>
+      <p>The website uses no cookies and no audience measurement. Your browser only keeps your theme and language choice, on your device. When the page loads, three services receive your IP address: Google Fonts (typefaces), jsDelivr (a 3D display library) and GitHub's API (to find the latest installer).</p>
+      <h3>The contact form and email</h3>
+      <p>If you write through the form, I receive your message, its type, the page language and your email address if you leave one. I only use it to answer you and improve SpectreIA. The message is stored at Cloudflare until I handle it, then I delete it, 12 months at the latest. Your IP address is not kept: only a scrambled fingerprint, erased after one hour, is used to limit how many messages can be sent. Nothing is sold or shared. If you email me directly, your mail provider and mine keep the message.</p>
+      <h3>Your rights</h3>
+      <p>You can ask to see, correct or delete the data I hold about you, or object to its use, by writing to <a data-mail href="#">the contact email</a>. If you feel that isn't enough, you can contact the CNIL (cnil.fr), the French data protection authority.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><b>SpectreIA</b> · <span data-l="fr">projet de fan gratuit, non affilié à Bungie. Destiny 2 est une marque de Bungie, Inc.</span><span data-l="en">free fan project, not affiliated with Bungie. Destiny 2 is a trademark of Bungie, Inc.</span></p>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement
+  var LANG = 'fr'
+  try { LANG = localStorage.getItem('spectre-site-lang') || (/^fr/i.test(navigator.language || '') ? 'fr' : 'en') } catch (e) { LANG = /^fr/i.test(navigator.language || '') ? 'fr' : 'en' }
+  root.lang = LANG
+  document.title = LANG === 'en' ? 'SpectreIA · Legal information' : 'SpectreIA · Informations légales'
+  if (LANG === 'en') { document.querySelectorAll('.theme button span').forEach(function (s) { s.textContent = s.textContent === 'Ombre' ? 'Shadow' : 'Light' }) }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.setAttribute('aria-pressed', b.dataset.lang === LANG)
+    b.addEventListener('click', function () { if (b.dataset.lang === LANG) return; try { localStorage.setItem('spectre-site-lang', b.dataset.lang) } catch (e) {} location.reload() })
+  })
+  // Adresse e-mail assemblée ici (pas écrite en clair dans la page : moins de robots qui la collectent)
+  var MAIL = ['david.fd1208', 'gmail.com'].join('@')
+  document.querySelectorAll('a[data-mail]').forEach(function (a) { a.href = 'mailto:' + MAIL; a.textContent = MAIL })
+  var bO = document.getElementById('t-ombre'), bL = document.getElementById('t-lumiere'), box = document.getElementById('theme')
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches }
+  function paint() { var d = isDark(); bO.setAttribute('aria-pressed', d); bL.setAttribute('aria-pressed', !d); box.dataset.on = d ? 'dark' : 'light' }
+  function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('spectre-site-theme', t) } catch (e) {} paint() }
+  try { var saved = localStorage.getItem('spectre-site-theme'); if (saved) root.setAttribute('data-theme', saved) } catch (e) {}
+  bO.addEventListener('click', function () { setTheme('dark') }); bL.addEventListener('click', function () { setTheme('light') })
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint) } catch (e) {}
+  paint()
+})()
+</script>
