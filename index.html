@@ -109,12 +109,12 @@
   .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); }
   .btn-sm { padding: 9px 15px; font-size: 13px; border-radius: 11px; }
   @media (max-width: 900px) { nav.links { display: none; } }
-  @media (max-width: 520px) { .bar .btn-sm { display: none; } .theme button span { display: none; } }
+  @media (max-width: 520px) { .bar .btn-sm { padding: 10px 11px; } .bar .btn-sm span { display: none; } .theme button span { display: none; } }
   @media (max-width: 520px) { .brand span { white-space: nowrap; letter-spacing: .12em; font-size: 15px; } .lang button { padding: 6px 7px; } }
   @media (max-width: 380px) { .brand span { display: none; } }
 
   /* ── Hero : le Spectre en 3D ───────────────────────────────────────────────────────────── */
-  .hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; padding-block: 40px 70px; min-height: 620px; }
+  .hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; padding-block: 40px 40px; min-height: 560px; }
   .hero h1 { font-size: clamp(46px, 7vw, 88px); letter-spacing: -.01em; }
   .hero h1 .grad { background: linear-gradient(100deg, var(--accent-ink), var(--ink) 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero .lead { margin-top: 22px; }
@@ -137,7 +137,8 @@
   .stage .ask::after { content: ""; position: absolute; left: 50%; top: -8px; width: 12px; height: 12px; background: inherit; border-left: 1px solid var(--line); border-top: 1px solid var(--line); transform: translateX(-50%) rotate(45deg); }
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: 0; padding-block: 24px 50px; } .stage { max-width: 420px; order: -1; } }
 
-  section { padding-block: 90px; }
+  section { padding-block: 76px; }
+  @media (max-width: 640px) { section { padding-block: 52px; } .fab { width: 54px; height: 54px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); } .fab img { width: 36px; height: 36px; } }
   .sec-head { display: grid; gap: 14px; margin-bottom: 42px; max-width: 760px; }
 
   /* ── Démo : vraies captures de l'app ─────────────────────────────────────────────── */
@@ -161,7 +162,8 @@
   @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .t-big, .t-2, .t-3 { grid-column: span 1; } }
 
   /* ── Raccourcis ─────────────────────────────────────────────────────────────────────── */
-  .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  #engagements { padding-top: 0; }
   .key { padding: 20px; display: grid; gap: 12px; align-content: start; }
   .caps { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .cap { font: 700 15px "Rajdhani", sans-serif; letter-spacing: .06em; min-width: 38px; text-align: center; padding: 7px 11px; border-radius: 10px; color: var(--ink);
@@ -232,6 +234,12 @@
   .contact aside a { font-weight: 600; text-decoration: none; }
   .contact aside a:hover { text-decoration: underline; }
   @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } .contact form, .contact aside { padding: 22px; } }
+  .relinfo { margin-top: 16px; font-size: 14px; color: var(--ink-3); }
+  .langf { display: inline-flex; gap: 4px; margin-left: auto; }
+  .langf button { border: 0; background: transparent; color: var(--ink-3); font: inherit; cursor: pointer; padding: 0 2px; }
+  .langf button + button::before { content: "·"; margin-right: 8px; color: var(--ink-3); }
+  .langf button:hover { color: var(--accent-ink); text-decoration: underline; }
+  .langf button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
   .foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
   .foot-links a { color: var(--ink-2); text-decoration: none; } .foot-links a:hover { color: var(--accent-ink); text-decoration: underline; }
   footer { padding-block: 40px 56px; color: var(--ink-3); font-size: 14px; display: grid; gap: 8px; border-top: 1px solid var(--line); }
@@ -289,8 +297,7 @@
           <button id="t-ombre" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7Z" fill="currentColor"/></svg><span>Ombre</span></button>
           <button id="t-lumiere" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M13 3l-1.4 1.4M4.4 11.6 3 13"/></g></svg><span>Lumière</span></button>
         </div>
-        <div class="lang" role="group" aria-label="Langue du site"><button type="button" data-lang="fr">FR</button><button type="button" data-lang="en">EN</button></div>
-        <a class="btn btn-primary btn-sm" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">Télécharger</a>
+        <a class="btn btn-primary btn-sm" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Télécharger</span></a>
       </div>
     </div>
   </div>
@@ -301,13 +308,14 @@
     <div class="intro">
       <p class="eyebrow">Compagnon Destiny 2 · Windows</p>
       <h1>Ton Spectre, <span class="grad">sur ton PC.</span></h1>
-      <p class="lead">Il trie ton inventaire, repère tes god rolls, forge tes builds et te guide en raid, directement par-dessus le jeu. Son intelligence artificielle tourne sur ton ordinateur : rien ne part sur un serveur.</p>
+      <p class="lead">Il trie ton inventaire, repère tes god rolls, prépare tes builds et t'ouvre le guide du raid par-dessus le jeu. L'IA tourne sur ton PC : rien ne part sur un serveur.</p>
       <div class="cta">
         <a class="btn btn-primary" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Télécharger gratuitement</a>
         <a class="btn btn-ghost" href="#demo">Voir la démo</a>
       </div>
+      <p class="relinfo" id="relinfo">Windows 10 et 11 · gratuit</p>
       <div class="facts"><span>Gratuit, sans pub</span><span>IA locale</span><span>API officielle de Bungie</span></div>
     </div>
     <div class="stage" id="stage">
@@ -385,11 +393,12 @@
       <p class="lead">Tout se fait au clavier, et SpectreIA rend la main à Destiny 2 dès que tu as fini. Les raccourcis se changent dans les paramètres.</p>
     </div>
     <div class="keys">
-      <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">W</span></div><strong>Parler au Spectre</strong><p>Un build, une arme, le lore, ou « fais-moi un guide pour ce donjon ».</p></div>
+      <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">W</span></div><strong>Écrire au Spectre</strong><p>Un build, une arme, le lore, ou « fais-moi un guide pour ce donjon ».</p></div>
       <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">G</span></div><strong>Guide de l'activité</strong><p>Ouvre ou ferme le guide du raid ou du donjon en cours.</p></div>
       <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">S</span></div><strong>Afficher les overlays</strong><p>Escouade, activité, butin et alertes, d'une seule touche.</p></div>
       <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">A</span></div><strong>L'app par-dessus le jeu</strong><p>Arsenal, Builds et Marchands sans Alt+Tab. Échap pour revenir.</p></div>
       <div class="key glass reveal"><div class="caps"><span class="cap">Alt</span><span class="plus">+</span><span class="cap">Maj</span><span class="plus">+</span><span class="cap">S</span></div><strong>Placer les overlays</strong><p>Déplace, agrandis, règle l'opacité et l'inclinaison.</p></div>
+      <div class="key glass reveal"><div class="caps"><span class="cap">²</span></div><strong>Lui parler</strong><p>Maintiens la touche, dis ta demande, relâche. Il la fait et te répond par écrit. À activer dans les réglages.</p></div>
     </div>
   </section>
 
@@ -408,7 +417,7 @@
     </div>
     <div class="install">
       <ol class="steps">
-        <li class="reveal"><div><h3>Télécharge l'installateur</h3><p><a data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">SpectreIA-Setup.exe</a> <span>se télécharge directement depuis le bouton Télécharger.</span> <span>Les mises à jour se font ensuite toutes seules.</span></p></div></li>
+        <li class="reveal"><div><h3>Télécharge l'installateur</h3><p>Clique sur <b>Télécharger</b> : le fichier <a data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">SpectreIA-Setup.exe</a> arrive tout seul. Ensuite, l'app se met à jour sans toi.</p></div></li>
         <li class="reveal"><div><h3>Lance-le</h3><p>Si Windows affiche « Windows a protégé votre ordinateur » (l'app n'est pas encore signée), clique sur <b>Informations complémentaires</b>, puis <b>Exécuter quand même</b>.</p></div></li>
         <li class="reveal"><div><h3>Connecte ton compte Bungie</h3><p>Autorise SpectreIA sur bungie.net, puis clique sur <b>Ouvrir SpectreIA</b> quand ton navigateur le propose.</p></div></li>
         <li class="reveal"><div><h3>Choisis ton IA</h3><p>SpectreIA regarde ton PC et conseille la version standard, la légère ou le mode sans IA. Elle s'installe en un clic.</p></div></li>
@@ -426,6 +435,7 @@
           <div class="tier"><b>IA légère</b><span class="muted">pour les PC plus modestes</span></div>
           <div class="tier"><b>Sans IA</b><span class="muted">inventaire, god rolls et overlays restent là</span></div>
         </div>
+        <a class="btn btn-primary" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe" style="width:100%;margin-top:18px">Télécharger gratuitement</a>
       </div>
     </div>
   </section>
@@ -433,7 +443,7 @@
   <section id="aide">
     <div class="sec-head reveal">
       <p class="eyebrow">Aide</p>
-      <h2>Un souci ? Commence ici.</h2>
+      <h2>Les réponses rapides.</h2>
       <p class="lead">Ou demande directement au Spectre, en bas à droite de l'écran.</p>
     </div>
     <div class="help" id="help"></div>
@@ -485,7 +495,7 @@
 </main>
 
 <footer class="wrap">
-  <p class="foot-links"><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#conditions">Conditions d'utilisation</a><a href="legal.html#confidentialite">Confidentialité</a><a href="https://github.com/Spectre-IA">GitHub · Spectre-IA</a><a href="https://github.com/Davvou-Ai">Davvou-Ai</a></p>
+  <p class="foot-links"><a href="legal.html#mentions">Mentions légales</a><a href="legal.html#conditions">Conditions d'utilisation</a><a href="legal.html#confidentialite">Confidentialité</a><a href="https://github.com/Spectre-IA">GitHub · Spectre-IA</a><a href="https://github.com/Davvou-Ai">Davvou-Ai</a><span class="langf" role="group" aria-label="Langue du site"><button type="button" data-lang="fr">Français</button><button type="button" data-lang="en">English</button></span></p>
   <p><b>SpectreIA</b> est un projet de fan gratuit, non affilié à Bungie. Destiny 2 est une marque de Bungie, Inc.</p>
   <p>Les données de jeu proviennent de l'API officielle de Bungie.</p>
 </footer>
@@ -519,6 +529,7 @@
   var isEn = LANG === 'en'
   var EN = {"se télécharge directement depuis le bouton Télécharger.": "downloads directly from the Download button.", "Les mises à jour se font ensuite toutes seules.": "Updates then install by themselves.", "L'application, en vrai.": "The real app.", "Des captures de SpectreIA, telles que tu les verras sur ton PC.": "Screenshots of SpectreIA, exactly as you'll see it on your PC.", "Tableau de bord": "Dashboard", "Inventaire": "Inventory", "Marchands": "Vendors", "Captures de l'application": "App screenshots", "Agrandir la capture": "Enlarge the screenshot", "Démo": "Demo", "Fonctionnalités": "Features", "En jeu": "In game", "Installation": "Install", "Aide": "Help", "Ombre": "Shadow", "Lumière": "Light", "Télécharger": "Download", "Compagnon Destiny 2 · Windows": "Destiny 2 companion · Windows", "Ton Spectre,": "Your Ghost,", "sur ton PC.": "on your PC.", "Il trie ton inventaire, repère tes god rolls, forge tes builds et te guide en raid, directement par-dessus le jeu. Son intelligence artificielle tourne sur ton ordinateur : rien ne part sur un serveur.": "It sorts your inventory, spots your god rolls, forges your builds and guides you through raids, right on top of the game. Its artificial intelligence runs on your computer: nothing goes to a server.", "Télécharger gratuitement": "Download for free", "Voir la démo": "See the demo", "Gratuit, sans pub": "Free, no ads", "IA locale": "Local AI", "API officielle de Bungie": "Official Bungie API", "Pose-moi une question": "Ask me a question", "Voilà ce que tu vois en jeu.": "Here's what you see in game.", "Les fenêtres de SpectreIA s'affichent par-dessus Destiny 2, discrètes, là où tu les as placées.": "SpectreIA's windows show on top of Destiny 2, discreet, right where you placed them.", "LE PUITS · DONJON": "PIT OF HERESY · DUNGEON", "ESCOUADE": "FIRETEAM", "Toi · Arcaniste": "You · Warlock", "Ami · Titan": "Friend · Titan", "Joueur trouvé": "Matchmade player", "GUIDE · ÉTAPE 2": "GUIDE · STEP 2", "Deux joueurs au centre, un sur chaque plaque. On annonce le symbole.": "Two players in the middle, one on each plate. Call out the symbol.", "NOUVEAUX ÉQUIPEMENTS": "NEW GEAR", "un bon build Titan pour ce donjon ?": "a good Titan build for this dungeon?", "Ton escouade, joueurs trouvés compris": "Your fireteam, matchmade players included", "Le guide de l'activité": "The activity guide", "Ton butin analysé en direct": "Your loot analyzed live", "Le Spectre qui te répond": "The Ghost answering you", "Tout ce que tu vérifies entre deux activités.": "Everything you check between two activities.", "Un inventaire qui se trie tout seul": "An inventory that sorts itself", "Chaque arme est comparée aux rolls recommandés par la communauté. Les god rolls et les armes à garder sont verrouillés avec leurs bons perks, les armures excellentes repérées, et ce qui peut partir est signalé.": "Every weapon is compared with the rolls the community recommends. God rolls and weapons worth keeping are locked with the right perks, excellent armor is spotted, and what can go is flagged.", "Des builds qui tiennent debout": "Builds that actually hold up", "Classe, sous-classe, activité : le Spectre assemble des pièces qui vont vraiment ensemble, explique comment jouer, et équipe tout en un clic.": "Class, subclass, activity: the Ghost puts together pieces that truly work together, explains how to play, and equips everything in one click.", "Guides de raids et donjons": "Raid and dungeon guides", "Dès que tu entres, un guide étape par étape s'ouvre : qui va où, quoi annoncer. Basé sur des fiches vérifiées.": "As soon as you enter, a step-by-step guide opens: who goes where, what to call out. Based on verified sheets.", "Les marchands, comparés à ce que tu as": "Vendors, compared with what you own", "Xûr, Banshee, Eververse : tu sais tout de suite s'il y a un god roll ou une armure à ne pas manquer, avant même d'aller à la Tour.": "Xûr, Banshee, Eververse: you know right away if there's a god roll or armor not to miss, before even going to the Tower.", "Ton style, remis tout seul": "Your style, reapplied by itself", "Choisis une fois ton shader et tes ornements : à chaque nouvelle arme ou armure, SpectreIA te remet ton style sans que tu y touches.": "Choose your shader and ornaments once: on every new weapon or armor piece, SpectreIA puts your style back without you touching anything.", "Tes mains restent sur le jeu.": "Your hands stay on the game.", "Tout se fait au clavier, et SpectreIA rend la main à Destiny 2 dès que tu as fini. Les raccourcis se changent dans les paramètres.": "Everything works from the keyboard, and SpectreIA hands control back to Destiny 2 as soon as you're done. Shortcuts can be changed in the settings.", "Parler au Spectre": "Talk to the Ghost", "Un build, une arme, le lore, ou « fais-moi un guide pour ce donjon ».": "A build, a weapon, lore, or “make me a guide for this dungeon”.", "Guide de l'activité": "Activity guide", "Ouvre ou ferme le guide du raid ou du donjon en cours.": "Opens or closes the guide for the current raid or dungeon.", "Afficher les overlays": "Show the overlays", "Escouade, activité, butin et alertes, d'une seule touche.": "Fireteam, activity, loot and alerts, with a single key.", "L'app par-dessus le jeu": "The app over the game", "Arsenal, Builds et Marchands sans Alt+Tab. Échap pour revenir.": "Arsenal, Builds and Vendors without Alt+Tab. Esc to go back.", "Maj": "Shift", "Placer les overlays": "Place the overlays", "Déplace, agrandis, règle l'opacité et l'inclinaison.": "Move, resize, set opacity and tilt.", "Gratuit": "Free", "Pas d'abonnement, pas de pub, pas de version payante. Tout est pour tout le monde.": "No subscription, no ads, no paid version. Everything is for everyone.", "Sur ton PC": "On your PC", "L'IA tourne sur ta machine. Tes questions ne partent sur aucun serveur, et l'app marche même sans IA.": "The AI runs on your machine. Your questions never go to a server, and the app even works without AI.", "Dans les règles": "By the rules", "Uniquement l'API officielle de Bungie. SpectreIA ne lit pas la mémoire du jeu et ne modifie aucun fichier.": "Only Bungie's official API. SpectreIA doesn't read the game's memory and doesn't change any file.", "Prêt en quelques minutes.": "Ready in a few minutes.", "Télécharge l'installateur": "Download the installer", "Récupère": "Get", "depuis la": "from the", "dernière version": "latest release", ". Les mises à jour se font ensuite toutes seules.": ". Updates then install by themselves.", "Lance-le": "Run it", "Si Windows affiche « Windows a protégé votre ordinateur » (l'app n'est pas encore signée), clique sur": "If Windows shows “Windows protected your PC” (the app isn't signed yet), click", "Informations complémentaires": "More info", ", puis": ", then", "Exécuter quand même": "Run anyway", "Connecte ton compte Bungie": "Connect your Bungie account", "Autorise SpectreIA sur bungie.net, puis clique sur": "Authorize SpectreIA on bungie.net, then click", "Ouvrir SpectreIA": "Open SpectreIA", "quand ton navigateur le propose.": "when your browser offers it.", "Choisis ton IA": "Choose your AI", "SpectreIA regarde ton PC et conseille la version standard, la légère ou le mode sans IA. Elle s'installe en un clic.": "SpectreIA checks your PC and recommends the standard version, the light one or the no-AI mode. It installs in one click.", "Configuration": "Requirements", "Système": "System", "Windows 10 ou 11, 64 bits": "Windows 10 or 11, 64-bit", "Jeu": "Game", "Destiny 2 en « Plein écran fenêtré » pour voir les overlays": "Destiny 2 in “Windowed Fullscreen” to see the overlays", "Compte": "Account", "Ton compte Bungie": "Your Bungie account", "Disque": "Disk", "Environ 1 Go, plus l'IA choisie": "About 1 GB, plus the chosen AI", "IA standard": "Standard AI", "16 Go de RAM, 8 Go de mémoire vidéo": "16 GB of RAM, 8 GB of video memory", "IA légère": "Light AI", "pour les PC plus modestes": "for more modest PCs", "Sans IA": "No AI", "inventaire, god rolls et overlays restent là": "inventory, god rolls and overlays stay", "Un souci ? Commence ici.": "A problem? Start here.", "Ou demande directement au Spectre, en bas à droite de l'écran.": "Or ask the Ghost directly, at the bottom right of the screen.", "Problèmes fréquents": "Common problems", "Questions fréquentes": "Frequently asked questions", "Communauté": "Community", "Un espace d'entraide arrive bientôt.": "A community space is coming soon.", "Questions, idées, retours de raid : un forum pour les Gardiens qui utilisent SpectreIA est en préparation.": "Questions, ideas, raid feedback: a forum for Guardians who use SpectreIA is on the way.", "est un projet de fan gratuit, non affilié à Bungie. Destiny 2 est une marque de Bungie, Inc.": "is a free fan project, not affiliated with Bungie. Destiny 2 is a trademark of Bungie, Inc.", "Les données de jeu proviennent de l'API officielle de Bungie.": "Game data comes from Bungie's official API.", "Questions sur l'application": "Questions about the app", "Ta question": "Your question", "Sections": "Sections", "Thème du site": "Site theme", "Animation : les overlays de SpectreIA pendant une partie": "Animation: SpectreIA's overlays during a match", "Inventaire de SpectreIA, thème Ombre": "SpectreIA inventory, Shadow theme", "Inventaire de SpectreIA, thème Lumière": "SpectreIA inventory, Light theme", "Poser une question au Spectre": "Ask the Ghost a question", "Le Spectre répond à tes questions": "The Ghost answers your questions", "Fermer": "Close", "Écris ta question…": "Write your question…", "Envoyer": "Send", "Langue du site": "Site language", "Signaler un problème": "Report a problem"}
   Object.assign(EN, {"Contact": "Contact", "Un souci, une idée, une question ?": "A problem, an idea, a question?", "Écris-moi ici. Je lis tout moi-même, et je te réponds si tu me laisses ton e-mail.": "Write to me here. I read everything myself, and I'll answer if you leave your email.", "Ton message parle de": "Your message is about", "Un problème": "A problem", "Une idée": "An idea", "Une question": "A question", "Autre chose": "Something else", "Ton message": "Your message", "Dis-moi ce qui se passe, ou ce que tu aimerais voir dans l'application.": "Tell me what's going on, or what you'd like to see in the app.", "Ton e-mail": "Your email", "(facultatif, seulement pour te répondre)": "(optional, only so I can answer)", "toi@exemple.fr": "you@example.com", "Ton message est lu par moi seul et gardé le temps de le traiter.": "Only I read your message, and it's kept just long enough to deal with it.", "Ce que je fais des données": "What I do with the data", "Envoyer": "Send", "Ailleurs": "Elsewhere", "L'organisation SpectreIA sur GitHub": "The SpectreIA organization on GitHub", "Les versions de l'application et les nouveautés.": "App releases and news.", "Signaler un problème sur GitHub": "Report a problem on GitHub", "Si tu préfères un suivi public.": "If you prefer public tracking.", "Le Gardien qui développe SpectreIA.": "The Guardian who develops SpectreIA.", "E-mail direct": "Direct email", "Pour tout ce qui ne rentre pas dans le formulaire.": "For anything that doesn't fit the form.", "Mentions légales": "Legal notice", "Conditions d'utilisation": "Terms of use", "Confidentialité": "Privacy", "GitHub · Spectre-IA": "GitHub · Spectre-IA"})
+  Object.assign(EN, {"Il trie ton inventaire, repère tes god rolls, prépare tes builds et t'ouvre le guide du raid par-dessus le jeu. L'IA tourne sur ton PC : rien ne part sur un serveur.": "It sorts your inventory, spots your god rolls, puts your builds together and opens the raid guide right over the game. The AI runs on your PC: nothing goes to a server.", "Windows 10 et 11 · gratuit": "Windows 10 and 11 · free", "Écrire au Spectre": "Write to your Ghost", "Lui parler": "Talk to it", "Maintiens la touche, dis ta demande, relâche. Il la fait et te répond par écrit. À activer dans les réglages.": "Hold the key, say what you want, release. It does it and answers in writing. Turn it on in the settings.", "Clique sur": "Click", ": le fichier": ": the file", "arrive tout seul. Ensuite, l'app se met à jour sans toi.": "downloads by itself. After that, the app updates without you.", "Télécharger gratuitement": "Download for free", "Les réponses rapides.": "Quick answers.", "Français": "Français"})
   root.lang = LANG
   function tr(s) { return isEn && EN[s] != null ? EN[s] : s }
   if (isEn) {
@@ -530,7 +541,7 @@
     })
     var md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', 'Free companion for Destiny 2 PC players: smart inventory, god rolls, builds, raid guides and in-game overlays, with an AI that runs on your computer.')
   }
-  document.querySelectorAll('.lang button').forEach(function (b) {
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
     b.setAttribute('aria-pressed', b.dataset.lang === LANG)
     b.addEventListener('click', function () { if (b.dataset.lang === LANG) return; try { localStorage.setItem('spectre-site-lang', b.dataset.lang) } catch (e) {} location.reload() })
   })
@@ -539,6 +550,11 @@
   fetch('https://api.github.com/repos/Spectre-IA/SpectreIA/releases/latest').then(function (r) { return r.ok ? r.json() : null }).then(function (d) {
     var exe = d && (d.assets || []).find(function (a) { return /\.exe$/i.test(a.name) })
     if (exe) document.querySelectorAll('[data-download]').forEach(function (a) { a.href = exe.browser_download_url })
+    var info = document.getElementById('relinfo')
+    if (info && exe && d.tag_name) {
+      var mb = Math.round(exe.size / 1048576)
+      info.textContent = isEn ? 'Version ' + d.tag_name.replace(/^v/, '') + ' · Windows 10 and 11 · ' + mb + ' MB · free' : 'Version ' + d.tag_name.replace(/^v/, '') + ' · Windows 10 et 11 · ' + mb + ' Mo · gratuit'
+    }
   }).catch(function () {})
 
   /* ── Thème Ombre / Lumière ─────────────────────────────────────────────────────────── */
