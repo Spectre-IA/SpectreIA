@@ -83,8 +83,8 @@
 
   /* ── Accueil ───────────────────────────────────────────────────────────────────────── */
   .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 48px; align-items: center; padding-block: 72px 56px; }
-  .hero h1 { font-size: clamp(40px, 5vw, 78px); font-weight: 800; letter-spacing: -.045em; line-height: .98; }
-  .hero h1 span { display: block; white-space: nowrap; }
+  .hero h1 { font-size: clamp(40px, 4.2vw, 64px); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  .hero h1 span { display: block; }
   .hero h1 span:last-child { color: var(--accent-ink); }
   .hero .lead { margin-top: 28px; font-size: 20px; }
   .intro > * { animation: fadeUp .8s cubic-bezier(.2,.8,.2,1) both; }
@@ -163,15 +163,10 @@
   @media (max-width: 900px) { .install { grid-template-columns: 1fr; gap: 40px; } }
 
   /* ── Aide : la FAQ, discrète ───────────────────────────────────────────────────────── */
-  .help-top { display: flex; align-items: center; gap: 36px; margin-bottom: 44px; }
+  .help-top { margin-bottom: 44px; }
   .help-top .sec-head { margin: 0; }
-  .ghost-host { position: relative; width: 150px; height: 150px; flex-shrink: 0; margin-left: auto; }
-  .ghost-host canvas, .ghost-host img.fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .ghost-host img.fallback { object-fit: contain; padding: 14%; transition: opacity .6s ease; }
-  .ghost-host.ready img.fallback { opacity: 0; }
   .linkbtn { background: none; border: 0; padding: 0; margin-top: 14px; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); cursor: pointer; text-align: left; }
   .linkbtn:hover { text-decoration: underline; }
-  @media (max-width: 640px) { .ghost-host { width: 90px; height: 90px; } .help-top { gap: 16px; } }
   .help { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
   .col-title { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
   .qa { border: 0; border-top: 1px solid var(--line); background: transparent; border-radius: 0; margin: 0; }
@@ -227,18 +222,27 @@
   .shot-view button { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.5); color: #fff; font-size: 22px; cursor: pointer; }
 
   /* ── Le Spectre qui répond (coin de l'écran) ───────────────────────────────────────── */
-  .fab { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 30; width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--bg); cursor: pointer; display: grid; place-items: center; padding: 0; transition: border-color .2s, transform .2s; }
-  .fab:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .fab img { width: 36px; height: 36px; }
-  .fab .dot { position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-  @media (max-width: 640px) { .fab { width: 50px; height: 50px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); } .fab img { width: 32px; height: 32px; } }
-  .chat { position: fixed; right: 20px; bottom: calc(90px + env(safe-area-inset-bottom, 0px)); z-index: 31; width: min(380px, calc(100vw - 28px)); height: min(540px, calc(100vh - 130px)); display: flex; flex-direction: column; background: var(--glass-2); border: 1px solid var(--line-2); border-radius: 8px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.55); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; overflow: hidden; }
+  /* Le Spectre flotte seul dans le coin : pas de pastille, juste un halo aux couleurs du thème derrière lui */
+  .spectre { position: fixed; right: 6px; bottom: calc(2px + env(safe-area-inset-bottom, 0px)); z-index: 32; width: 136px; height: 136px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .spectre:focus-visible { outline: none; }
+  .spectre:focus-visible .spectre-glow { opacity: 1; transform: scale(1.12); }
+  .spectre-glow { position: absolute; inset: 8%; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(var(--accent-rgb), var(--glow-a)) 0%, rgba(var(--accent-rgb), calc(var(--glow-a) * .35)) 45%, rgba(var(--accent-rgb), 0) 100%); opacity: .75; filter: blur(4px); transition: opacity .4s ease, transform .4s cubic-bezier(.2,.8,.2,1); animation: breathe 4.2s ease-in-out infinite; }
+  :root { --glow-a: .78; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glow-a: .62; } }
+  :root[data-theme="dark"] { --glow-a: .62; }
+  @keyframes breathe { 50% { transform: scale(1.1); opacity: .95; } }
+  .spectre:hover .spectre-glow, .spectre.talking .spectre-glow { opacity: 1; transform: scale(1.18); animation-duration: 1.4s; }
+  .spectre-3d { position: absolute; inset: 0; }
+  .spectre-3d canvas, .spectre-3d img.fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .spectre-3d img.fallback { object-fit: contain; padding: 24%; transition: opacity .6s ease; }
+  .spectre-3d.ready img.fallback { opacity: 0; }
+  .spectre-tip { position: absolute; right: 100%; bottom: 50%; transform: translate(6px, 50%); white-space: nowrap; font: 500 13.5px var(--sans); color: var(--ink); background: var(--glass-2); border: 1px solid var(--line-2); border-radius: 6px; padding: 7px 11px; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+  .spectre:hover .spectre-tip, .spectre.hello .spectre-tip { opacity: 1; transform: translate(-2px, 50%); }
+  .spectre.open .spectre-tip { opacity: 0; }
+  @media (max-width: 640px) { .spectre { width: 104px; height: 104px; right: 0; } .spectre-tip { display: none; } }
+  .chat { position: fixed; right: 20px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); z-index: 31; width: min(380px, calc(100vw - 28px)); height: min(540px, calc(100vh - 130px)); display: flex; flex-direction: column; background: var(--glass-2); border: 1px solid var(--line-2); border-radius: 8px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.55); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; overflow: hidden; }
   .chat.open { opacity: 1; transform: none; pointer-events: auto; }
   .chat-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
-  .chat-head .mini { width: 52px; height: 52px; position: relative; flex-shrink: 0; }
-  .chat-head .mini canvas, .chat-head .mini img { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .chat-head .mini img { object-fit: contain; padding: 6px; }
-  .chat-head .mini.ready img { opacity: 0; }
   .chat-head b { font: 600 13px var(--mono); letter-spacing: .14em; display: block; }
   .chat-head small { color: var(--ink-3); font-size: 13px; }
   .chat-head .x { margin-left: auto; width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
