@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>if (/\/index\.html$/.test(location.pathname)) history.replaceState(null, "", location.pathname.replace(/index\.html$/, "") + location.search + location.hash)</script>
 <title>SpectreIA · Informations légales</title>
 <link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
 <link rel="apple-touch-icon" href="icon-256.png">
@@ -73,6 +74,8 @@
   .bar { display: flex; align-items: center; gap: 28px; height: 76px; }
   .brand { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); font-weight: 800; font-size: clamp(38px, 8vw, 66px); letter-spacing: -.04em; line-height: 1; }
   .brand em { font-style: normal; color: var(--accent-ink); }
+  /* Le nom est plus grand que la barre : la queue du « p » descend sous le trait, dans la page */
+  .brand span { display: inline-block; transform: translateY(24px); }
   nav.links { display: flex; gap: 26px; margin-left: 8px; }
   nav.links a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; transition: color .2s; }
   nav.links a:hover { color: var(--ink); }
