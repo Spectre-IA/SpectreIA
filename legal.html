@@ -1,6 +1,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>if (/\/index\.html$/.test(location.pathname)) history.replaceState(null, "", location.pathname.replace(/index\.html$/, "") + location.search + location.hash)</script>
+<script>try { var __t = localStorage.getItem("spectre-site-theme"); if (__t) document.documentElement.setAttribute("data-theme", __t) } catch (e) {}</script>
+<meta name="theme-color" content="#EEEBE4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#070A08" media="(prefers-color-scheme: dark)">
 <title>SpectreIA · Informations légales</title>
 <link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
 <link rel="apple-touch-icon" href="icon-256.png">
@@ -75,15 +78,24 @@
   .brand { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); font-weight: 800; font-size: clamp(38px, 8vw, 66px); letter-spacing: -.04em; line-height: 1; }
   .brand em { font-style: normal; color: var(--accent-ink); }
   /* Le nom est plus grand que la barre : la queue du « p » descend sous le trait, dans la page */
-  .brand span { display: inline-block; transform: translateY(24px); }
+  .brand span { display: inline-block; transform: translateY(14px); }
   nav.links { display: flex; gap: 26px; margin-left: 8px; }
   nav.links a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; transition: color .2s; }
   nav.links a:hover { color: var(--ink); }
   .right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
-  .theme { display: flex; border: 1px solid var(--line-2); border-radius: 4px; overflow: hidden; }
+  /* Sélecteur de thème : deux icônes, l'actif à la couleur d'accent sans bloc plein */
+  .theme { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line-2); border-radius: 8px; }
   .theme .pill { display: none; }
-  .theme button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--ink-3); font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 7px 10px; cursor: pointer; transition: background-color .2s, color .2s; }
-  .theme button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .theme button { position: relative; display: inline-grid; place-items: center; width: 34px; height: 30px; border: 0; border-radius: 6px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background-color .25s, color .25s, box-shadow .25s; }
+  .theme button:hover { color: var(--ink); background: var(--glass); }
+  .theme button[aria-pressed="true"] { color: var(--accent-ink); background: rgba(var(--accent-rgb), .14); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .55); }
+  .theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme button svg { width: 15px; height: 15px; }
+  .theme button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* Changement de thème : le nouveau thème se déploie en cercle depuis le bouton (navigateurs compatibles) */
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) { z-index: 2147483646; }
+  ::view-transition-old(root) { z-index: 1; }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: 600 12.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: 15px 24px; border-radius: 4px; border: 1px solid transparent; cursor: pointer; transition: background-color .2s, border-color .2s, transform .2s; }
   .btn-primary { background: var(--accent); color: var(--on-accent); }
   .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.06); }
@@ -91,7 +103,7 @@
   .btn-ghost:hover { border-color: var(--ink); }
   .btn-sm { padding: 10px 16px; font-size: 12px; }
   @media (max-width: 960px) { nav.links { display: none; } }
-  @media (max-width: 520px) { .bar { gap: 12px; } .theme button span { display: none; } .bar .btn-sm { padding: 10px 12px; } .bar .btn-sm span { display: none; } }
+  @media (max-width: 520px) { .bar { gap: 12px; } .bar .btn-sm { padding: 10px 12px; } .bar .btn-sm span { display: none; } }
 
   /* ── Accueil ───────────────────────────────────────────────────────────────────────── */
   .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 48px; align-items: center; padding-block: 72px 56px; }
@@ -309,8 +321,8 @@
       <div class="right">
         <div class="theme" id="theme" role="group" aria-label="Thème du site / Site theme">
           <span class="pill" aria-hidden="true"></span>
-          <button id="t-ombre" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7Z" fill="currentColor"/></svg><span>Ombre</span></button>
-          <button id="t-lumiere" type="button" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M13 3l-1.4 1.4M4.4 11.6 3 13"/></g></svg><span>Lumière</span></button>
+          <button id="t-ombre" type="button" aria-pressed="false" title="Ombre / Dark" aria-label="Ombre / Dark"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7Z" fill="currentColor"/></svg><span>Ombre</span></button>
+          <button id="t-lumiere" type="button" aria-pressed="false" title="Lumière / Light" aria-label="Lumière / Light"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M13 3l-1.4 1.4M4.4 11.6 3 13"/></g></svg><span>Lumière</span></button>
         </div>
       </div>
     </div>
@@ -487,9 +499,24 @@
   var bO = document.getElementById('t-ombre'), bL = document.getElementById('t-lumiere'), box = document.getElementById('theme')
   function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches }
   function paint() { var d = isDark(); bO.setAttribute('aria-pressed', d); bL.setAttribute('aria-pressed', !d); box.dataset.on = d ? 'dark' : 'light' }
-  function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('spectre-site-theme', t) } catch (e) {} paint() }
+  function applyTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('spectre-site-theme', t) } catch (e) {} paint() }
+  // Le nouveau thème se déploie depuis le bouton cliqué ; sans l'API (ou animations réduites), changement direct
+  function setTheme(t, ev) {
+    var cur = isDark() ? 'dark' : 'light'
+    if (t === cur) return
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!document.startViewTransition || still) return applyTheme(t)
+    var b = ev && ev.currentTarget ? ev.currentTarget.getBoundingClientRect() : null
+    var x = b ? b.left + b.width / 2 : innerWidth / 2, y = b ? b.top + b.height / 2 : 0
+    var r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+    var vt = document.startViewTransition(function () { applyTheme(t) })
+    vt.ready.then(function () {
+      root.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' })
+    }).catch(function () {})
+  }
   try { var saved = localStorage.getItem('spectre-site-theme'); if (saved) root.setAttribute('data-theme', saved) } catch (e) {}
-  bO.addEventListener('click', function () { setTheme('dark') }); bL.addEventListener('click', function () { setTheme('light') })
+  bO.addEventListener('click', function (e) { setTheme('dark', e) }); bL.addEventListener('click', function (e) { setTheme('light', e) })
   try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint) } catch (e) {}
   paint()
 })()
