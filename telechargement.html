@@ -1,0 +1,465 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>if (/\/index\.html$/.test(location.pathname)) history.replaceState(null, "", location.pathname.replace(/index\.html$/, "") + location.search + location.hash)</script>
+<script>try { var __t = localStorage.getItem("spectre-site-theme"); if (__t) document.documentElement.setAttribute("data-theme", __t) } catch (e) {}</script>
+<meta name="theme-color" content="#EEEBE4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#070A08" media="(prefers-color-scheme: dark)">
+<title>SpectreIA · Téléchargement et sécurité</title>
+<link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
+<link rel="apple-touch-icon" href="icon-256.png">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ── Thèmes : Ombre (sombre) et Lumière (clair), selon le système ou le choix du visiteur ──────────────── */
+  :root {
+    --bg: #EEEBE4; --bg-2: #E6E2D9; --glass: rgba(26,24,20,.035); --glass-2: #FBF9F5;
+    --ink: #1A1814; --ink-2: rgba(26,24,20,.72); --ink-3: rgba(26,24,20,.52);
+    --line: rgba(26,24,20,.11); --line-2: rgba(26,24,20,.22);
+    --accent: #B8650A; --accent-ink: #8F4D06; --accent-rgb: 184,101,10; --on-accent: #fff;
+    --sans: "Inter Tight", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #070A08; --bg-2: #0B100D; --glass: rgba(232,229,221,.03); --glass-2: #0D130F;
+      --ink: #E8E5DD; --ink-2: rgba(232,229,221,.72); --ink-3: rgba(232,229,221,.46);
+      --line: rgba(232,229,221,.10); --line-2: rgba(232,229,221,.22);
+      --accent: #63E68A; --accent-ink: #63E68A; --accent-rgb: 99,230,138; --on-accent: #04110A;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #070A08; --bg-2: #0B100D; --glass: rgba(232,229,221,.03); --glass-2: #0D130F;
+    --ink: #E8E5DD; --ink-2: rgba(232,229,221,.72); --ink-3: rgba(232,229,221,.46);
+    --line: rgba(232,229,221,.10); --line-2: rgba(232,229,221,.22);
+    --accent: #63E68A; --accent-ink: #63E68A; --accent-rgb: 99,230,138; --on-accent: #04110A;
+  }
+  /* Images propres à un thème */
+  .th-dark { display: none; } .th-light { display: block; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .th-dark { display: block; } :root:not([data-theme="light"]) .th-light { display: none; } }
+  :root[data-theme="dark"] .th-dark { display: block; } :root[data-theme="dark"] .th-light { display: none; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; scrollbar-width: none; }
+  html::-webkit-scrollbar { display: none; }
+  .sbar { position: fixed; top: 0; right: 0; bottom: 0; width: 14px; z-index: 60; opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+  .sbar.on, .sbar:hover, .sbar.drag { opacity: 1; pointer-events: auto; }
+  .sbar i { position: absolute; right: 3px; width: 5px; border-radius: 3px; background: var(--ink-3); transition: width .15s ease, background-color .15s ease; cursor: grab; }
+  .sbar:hover i, .sbar.drag i { width: 8px; background: var(--ink-2); }
+  .sbar.drag i { cursor: grabbing; }
+  @media (pointer: coarse) { .sbar { display: none; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); overflow-x: clip; transition: background-color .5s ease, color .5s ease; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1240px; margin-inline: auto; padding-inline: 24px; }
+  h1, h2, h3 { font-family: var(--sans); font-weight: 700; line-height: 1.04; letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(30px, 4.4vw, 52px); }
+  h3 { font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
+  p { margin: 0; }
+  a { color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .mono, .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+  .eyebrow { color: var(--accent-ink); display: block; margin-bottom: 18px; }
+  .lead { font-size: 19px; color: var(--ink-2); max-width: 54ch; }
+  .muted { color: var(--ink-3); }
+  /* Surfaces : aucune ombre, aucun verre, juste un filet */
+  .glass, .panel { background: var(--glass); border: 1px solid var(--line); border-radius: 6px; }
+
+  /* Apparition au défilement : un simple fondu, visible par défaut */
+  @supports (animation-timeline: view()) {
+    .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+  /* ── En-tête ───────────────────────────────────────────────────────────────────────── */
+  .top { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--line); transition: background-color .5s ease; }
+  .bar { display: flex; align-items: center; gap: 28px; height: 76px; }
+  .brand { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); font-weight: 800; font-size: clamp(38px, 8vw, 66px); letter-spacing: -.04em; line-height: 1; }
+  .brand em { font-style: normal; color: var(--accent-ink); }
+  /* Le nom est plus grand que la barre : la queue du « p » descend sous le trait, dans la page */
+  .brand span { display: inline-block; transform: translateY(14px); }
+  nav.links { display: flex; gap: 26px; margin-left: 8px; }
+  nav.links a { color: var(--ink-2); text-decoration: none; font-size: 14.5px; font-weight: 500; transition: color .2s; }
+  nav.links a:hover { color: var(--ink); }
+  .right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+  /* Sélecteur de thème : deux icônes, l'actif à la couleur d'accent sans bloc plein */
+  .theme { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line-2); border-radius: 8px; }
+  .theme .pill { display: none; }
+  .theme button { position: relative; display: inline-grid; place-items: center; width: 34px; height: 30px; border: 0; border-radius: 6px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background-color .25s, color .25s, box-shadow .25s; }
+  .theme button:hover { color: var(--ink); background: var(--glass); }
+  .theme button[aria-pressed="true"] { color: var(--accent-ink); background: rgba(var(--accent-rgb), .14); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .55); }
+  .theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme button svg { width: 15px; height: 15px; }
+  .theme button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* Changement de thème : le nouveau thème se déploie en cercle depuis le bouton (navigateurs compatibles) */
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) { z-index: 2147483646; }
+  ::view-transition-old(root) { z-index: 1; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font: 600 12.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: 15px 24px; border-radius: 4px; border: 1px solid transparent; cursor: pointer; transition: background-color .2s, border-color .2s, transform .2s; }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.06); }
+  .btn-ghost { border-color: var(--line-2); color: var(--ink); background: transparent; }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-sm { padding: 10px 16px; font-size: 12px; }
+  @media (max-width: 960px) { nav.links { display: none; } }
+  @media (max-width: 520px) { .bar { gap: 12px; } .bar .btn-sm { padding: 10px 12px; } .bar .btn-sm span { display: none; } }
+
+  /* ── Accueil ───────────────────────────────────────────────────────────────────────── */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 48px; align-items: center; padding-block: 72px 56px; }
+  .hero h1 { font-size: clamp(40px, 4.2vw, 64px); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  .hero h1 span { display: block; }
+  .hero h1 span:last-child { color: var(--accent-ink); }
+  .hero .lead { margin-top: 28px; font-size: 20px; }
+  .intro > * { animation: fadeUp .8s cubic-bezier(.2,.8,.2,1) both; }
+  .intro > *:nth-child(2) { animation-delay: .07s; } .intro > *:nth-child(3) { animation-delay: .14s; } .intro > *:nth-child(4) { animation-delay: .21s; } .intro > *:nth-child(5) { animation-delay: .28s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; align-items: center; }
+  .relinfo { margin-top: 18px; font: 400 12.5px var(--mono); letter-spacing: .04em; color: var(--ink-3); }
+  /* La vraie capture de l'app, entière */
+  .hero-shot { border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; background: var(--bg-2); animation: fadeUp 1s .2s cubic-bezier(.2,.8,.2,1) both; }
+  .hero-shot img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 900; object-fit: cover; object-position: left top; }
+  @media (max-width: 960px) { .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 44px 36px; } } 
+  /* Bande technique */
+  .spec { display: flex; flex-wrap: wrap; gap: 8px 0; border-block: 1px solid var(--line); font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+  .spec span { padding: 16px 22px 16px 0; margin-right: 22px; position: relative; }
+  .spec span + span::before { content: "/"; position: absolute; left: -26px; color: var(--line-2); }
+  .spec b { color: var(--accent-ink); font-weight: 500; }
+
+  section { padding-block: 96px; }
+  .sec-head { display: grid; gap: 6px; margin-bottom: 56px; max-width: 760px; }
+  .sec-head .lead { margin-top: 14px; }
+  @media (max-width: 640px) { section { padding-block: 60px; } .sec-head { margin-bottom: 36px; } }
+
+  /* ── Fonctionnalités : une longue présentation, capture et texte en alternance ──────────────────────── */
+  .feat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: center; padding-block: 44px; border-top: 1px solid var(--line); }
+  .feat.alt { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .feat.alt .txt { order: 2; }
+  .feat .num { display: block; font: 500 13px var(--mono); letter-spacing: .14em; color: var(--accent-ink); margin-bottom: 16px; }
+  .feat h3 { font-size: clamp(26px, 3.2vw, 38px); margin-bottom: 16px; }
+  .feat p { color: var(--ink-2); font-size: 17.5px; max-width: 46ch; }
+  .shotbtn { display: block; width: 100%; padding: 0; border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; background: var(--bg-2); cursor: zoom-in; transition: border-color .25s; }
+  .shotbtn:hover { border-color: var(--ink-3); }
+  .shotbtn img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 900; }
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--line); }
+  .more > div { padding: 40px 40px 8px 0; }
+  .more > div + div { padding-left: 40px; padding-right: 0; border-left: 1px solid var(--line); }
+  .more h3 { margin-bottom: 12px; }
+  .more p { color: var(--ink-2); font-size: 17px; max-width: 44ch; }
+  @media (max-width: 860px) { .feat, .feat.alt { grid-template-columns: 1fr; gap: 26px; padding-block: 34px; } .feat.alt .txt { order: 0; } .more { grid-template-columns: 1fr; } .more > div, .more > div + div { padding: 30px 0 4px; border-left: 0; } .more > div + div { border-top: 1px solid var(--line); margin-top: 10px; } }
+
+  /* ── En jeu : comme une documentation ──────────────────────────────────────────────── */
+  .keys { border-top: 1px solid var(--line-2); }
+  .key { display: grid; grid-template-columns: 250px 1fr; gap: 28px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .key .caps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .cap { display: inline-block; min-width: 40px; text-align: center; padding: 7px 11px; border: 1px solid var(--line-2); border-bottom-width: 3px; border-radius: 5px; font: 500 15px var(--mono); color: var(--ink); background: var(--glass); }
+  .plus { color: var(--ink-3); font-family: var(--mono); font-size: 13px; }
+  .key strong { display: block; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+  .key p { color: var(--ink-2); font-size: 16px; margin-top: 2px; }
+  @media (max-width: 700px) { .key { grid-template-columns: 1fr; gap: 12px; padding: 18px 0; } }
+
+  /* ── Engagements : une seule bande de spécifications ───────────────────────────────── */
+  #engagements { padding-block: 0 24px; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line-2); border-radius: 6px; }
+  .pillar { padding: 30px 30px 32px; }
+  .pillar + .pillar { border-left: 1px solid var(--line); }
+  .pillar .display { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 12px; }
+  .pillar p:last-child { color: var(--ink-2); font-size: 16.5px; }
+  @media (max-width: 820px) { .pillars { grid-template-columns: 1fr; } .pillar + .pillar { border-left: 0; border-top: 1px solid var(--line); } }
+
+  /* ── Installation : 01 à 04, à la verticale ────────────────────────────────────────── */
+  .install { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+  ol.steps { list-style: none; margin: 0; padding: 0; display: grid; counter-reset: s; border-top: 1px solid var(--line-2); }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  ol.steps li::before { content: counter(s, decimal-leading-zero); font: 500 15px var(--mono); color: var(--accent-ink); padding-top: 4px; }
+  ol.steps h3 { margin-bottom: 6px; font-size: 21px; }
+  ol.steps p { color: var(--ink-2); font-size: 16.5px; }
+  ol.steps b { color: var(--ink); font-weight: 600; }
+  .req { padding: 28px; }
+  .req h3 { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .req dl { margin: 0; display: grid; }
+  .req .row { display: grid; grid-template-columns: 90px 1fr; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
+  .req dt { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .req dd { margin: 0; }
+  .tiers { margin-top: 18px; display: grid; gap: 8px; }
+  .tier { display: grid; gap: 1px; font-size: 15px; }
+  .tier b { font-weight: 600; }
+  @media (max-width: 900px) { .install { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ── Aide : la FAQ, discrète ───────────────────────────────────────────────────────── */
+  .help-top { margin-bottom: 44px; }
+  .help-top .sec-head { margin: 0; }
+  .linkbtn { background: none; border: 0; padding: 0; margin-top: 14px; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); cursor: pointer; text-align: left; }
+  .linkbtn:hover { text-decoration: underline; }
+  .help { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+  .col-title { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+  .qa { border: 0; border-top: 1px solid var(--line); background: transparent; border-radius: 0; margin: 0; }
+  .qa:last-child { border-bottom: 1px solid var(--line); }
+  .qa.glass { border: 0; border-top: 1px solid var(--line); background: transparent; }
+  .qa button.q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; text-align: left; background: transparent; border: 0; color: var(--ink); font: 500 16.5px var(--sans); padding: 17px 0; cursor: pointer; }
+  .qa .chev { flex-shrink: 0; width: 22px; height: 22px; display: grid; place-items: center; color: var(--ink-3); transition: transform .35s cubic-bezier(.2,.8,.2,1), color .2s; }
+  .qa button.q:hover .chev { color: var(--ink); }
+  .qa.open .chev { transform: rotate(45deg); color: var(--accent-ink); }
+  .qa .ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.2,.8,.2,1); }
+  .qa.open .ans { grid-template-rows: 1fr; }
+  .qa .ans > div { overflow: hidden; }
+  .qa .ans p { padding: 0 34px 18px 0; color: var(--ink-2); font-size: 16px; }
+  @media (max-width: 880px) { .help { grid-template-columns: 1fr; gap: 30px; } }
+
+  /* ── Contact ───────────────────────────────────────────────────────────────────────── */
+  .contact { display: grid; grid-template-columns: 1.5fr 1fr; gap: 56px; align-items: start; }
+  .contact form { display: grid; gap: 20px; position: relative; }
+  .field { display: grid; gap: 8px; }
+  .field label { font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+  .field label .muted { text-transform: none; letter-spacing: 0; font: 400 13px var(--sans); }
+  .contact select, .contact textarea, .contact input[type="email"] { width: 100%; border: 1px solid var(--line-2); background: var(--glass); color: var(--ink); font: 16px var(--sans); padding: 12px 14px; border-radius: 4px; outline: none; transition: border-color .2s; }
+  .contact textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+  .contact select:focus, .contact textarea:focus, .contact input[type="email"]:focus { border-color: var(--accent); }
+  .contact .fine { font-size: 14px; color: var(--ink-3); }
+  .contact .send { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .contact .send button[disabled] { opacity: .6; cursor: progress; }
+  #c-status { font-size: 15px; color: var(--ink-2); }
+  #c-status.ok { color: var(--accent-ink); } #c-status.bad { color: #E5534B; }
+  .contact aside { display: grid; gap: 14px; }
+  .contact aside h3 { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+  .contact aside ul { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
+  .contact aside li { display: grid; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .contact aside li span { font-size: 14px; color: var(--ink-3); }
+  .contact aside a { font-weight: 600; text-decoration: none; color: var(--ink); }
+  .contact aside a:hover { color: var(--accent-ink); }
+  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ── Pied de page ──────────────────────────────────────────────────────────────────── */
+  footer { padding-block: 40px 64px; color: var(--ink-3); font-size: 14px; display: grid; gap: 8px; border-top: 1px solid var(--line); }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  .foot-links a { color: var(--ink-2); text-decoration: none; } .foot-links a:hover { color: var(--accent-ink); text-decoration: underline; }
+  .langf { display: inline-flex; gap: 4px; margin-left: auto; }
+  .langf button { border: 0; background: transparent; color: var(--ink-3); font: inherit; cursor: pointer; padding: 0 2px; }
+  .langf button + button::before { content: "·"; margin-right: 8px; color: var(--ink-3); }
+  .langf button:hover { color: var(--accent-ink); text-decoration: underline; }
+  .langf button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+
+  /* ── Visionneuse de capture ────────────────────────────────────────────────────────── */
+  .shot-view { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.88); display: grid; place-items: center; padding: 28px; cursor: zoom-out; }
+  .shot-view[hidden] { display: none; }
+  .shot-view img { max-width: 100%; max-height: 100%; border-radius: 6px; }
+  .shot-view button { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.5); color: #fff; font-size: 22px; cursor: pointer; }
+
+  /* ── Le Spectre qui répond (coin de l'écran) ───────────────────────────────────────── */
+  /* Le Spectre flotte seul dans le coin : pas de pastille, juste un halo aux couleurs du thème derrière lui */
+  .spectre { position: fixed; right: 6px; bottom: calc(2px + env(safe-area-inset-bottom, 0px)); z-index: 32; width: 136px; height: 136px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .spectre:focus-visible { outline: none; }
+  .spectre:focus-visible .spectre-glow { opacity: 1; transform: scale(1.12); }
+  .spectre-glow { position: absolute; inset: 8%; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(var(--accent-rgb), var(--glow-a)) 0%, rgba(var(--accent-rgb), calc(var(--glow-a) * .35)) 45%, rgba(var(--accent-rgb), 0) 100%); opacity: .75; filter: blur(4px); transition: opacity .4s ease, transform .4s cubic-bezier(.2,.8,.2,1); animation: breathe 4.2s ease-in-out infinite; }
+  :root { --glow-a: .78; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glow-a: .62; } }
+  :root[data-theme="dark"] { --glow-a: .62; }
+  @keyframes breathe { 50% { transform: scale(1.1); opacity: .95; } }
+  .spectre:hover .spectre-glow, .spectre.talking .spectre-glow { opacity: 1; transform: scale(1.18); animation-duration: 1.4s; }
+  .spectre-3d { position: absolute; inset: 0; }
+  .spectre-3d canvas, .spectre-3d img.fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .spectre-3d img.fallback { object-fit: contain; padding: 24%; transition: opacity .6s ease; }
+  .spectre-3d.ready img.fallback { opacity: 0; }
+  .spectre-tip { position: absolute; right: 100%; bottom: 50%; transform: translate(6px, 50%); white-space: nowrap; font: 500 13.5px var(--sans); color: var(--ink); background: var(--glass-2); border: 1px solid var(--line-2); border-radius: 6px; padding: 7px 11px; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+  .spectre:hover .spectre-tip, .spectre.hello .spectre-tip { opacity: 1; transform: translate(-2px, 50%); }
+  .spectre.open .spectre-tip { opacity: 0; }
+  @media (max-width: 640px) { .spectre { width: 104px; height: 104px; right: 0; } .spectre-tip { display: none; } }
+  .chat { position: fixed; right: 20px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); z-index: 31; width: min(400px, calc(100vw - 28px)); height: min(640px, calc(100dvh - 160px)); background: var(--glass-2); border: 1px solid var(--line-2); border-radius: 8px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.55); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; overflow: hidden; }
+  .chat.open { opacity: 1; transform: none; pointer-events: auto; }
+  .chat-head { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: flex; align-items: center; gap: 12px; padding: 12px 14px 30px; background: linear-gradient(var(--glass-2) 62%, transparent); pointer-events: none; }
+  .chat-head > * { pointer-events: auto; }
+  .chat-head b { font: 600 13px var(--mono); letter-spacing: .14em; display: block; }
+  .chat-head small { color: var(--ink-3); font-size: 13px; }
+  .chat-head .x { margin-left: auto; width: 32px; height: 32px; border-radius: 4px; border: 0; background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .msgs { position: absolute; inset: 0; overflow-y: auto; padding: 72px 14px 84px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: none; overscroll-behavior: contain; }
+  .msgs::-webkit-scrollbar { display: none; }
+  .msg { max-width: 88%; padding: 10px 13px; border-radius: 6px; font-size: 15px; line-height: 1.5; animation: pop .3s ease both; }
+  .msg.bot { background: var(--glass); border: 1px solid var(--line); }
+  .msg.me { margin-left: auto; background: var(--accent); color: var(--on-accent); }
+  .msg.typing { display: inline-flex; gap: 4px; }
+  .msg.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1s infinite; }
+  .msg.typing i:nth-child(2) { animation-delay: .15s; } .msg.typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes blink { 50% { opacity: .25; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px; }
+  .chips:empty { display: none; }
+  .chip { border: 1px solid var(--line-2); background: transparent; color: var(--ink); font: 400 13px var(--sans); padding: 6px 11px; border-radius: 4px; cursor: pointer; text-align: left; }
+  .chip:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .chat form { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; padding: 26px 12px 12px; background: linear-gradient(transparent, var(--glass-2) 45%); }
+  .chat input { flex: 1; min-width: 0; border: 1px solid var(--line-2); background: transparent; color: var(--ink); font: 15px var(--sans); padding: 10px 12px; border-radius: 4px; outline: none; }
+  .chat input:focus { border-color: var(--accent); }
+  .chat form button { border: 0; background: var(--accent); color: var(--on-accent); width: 42px; border-radius: 4px; cursor: pointer; display: grid; place-items: center; }
+
+  /* ── Page téléchargement / sécurité ───────────────────────────────────────────────── */
+  .legal-wrap { max-width: 780px; margin-inline: auto; padding-block: 40px 90px; }
+  .legal-wrap > h1 { font-size: clamp(36px, 6vw, 60px); margin-bottom: 8px; }
+  .legal-wrap .upd { color: var(--ink-3); font-size: 14px; margin-bottom: 30px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+  .toc a { text-decoration: none; color: var(--ink); border: 1px solid var(--line-2); background: transparent; padding: 9px 16px; border-radius: 4px; font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; transition: border-color .2s; }
+  .toc a:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .doc { padding-block: 0 56px; scroll-margin-top: 90px; }
+  .doc h2 { font-size: clamp(28px, 4vw, 38px); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .doc h3 { font-size: 19px; margin: 26px 0 8px; color: var(--accent-ink); }
+  .doc p, .doc li { color: var(--ink-2); font-size: 16px; }
+  .doc p + p { margin-top: 12px; }
+  .doc ul + p { margin-top: 14px; }
+  .doc ul { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; }
+  .note { border: 1px solid var(--line-2); background: var(--glass); border-radius: 6px; padding: 14px 18px; color: var(--ink-2); margin-top: 16px; }
+  .vt-badge { display: flex; align-items: center; gap: 14px; border: 1px solid var(--line-2); background: var(--glass); border-radius: 8px; padding: 16px 20px; margin-top: 14px; }
+  .vt-badge b { font-size: 22px; color: var(--accent-ink); white-space: nowrap; }
+  .vt-badge span { color: var(--ink-3); font-size: 13px; }
+  [data-l] { display: none; } html[lang="fr"] [data-l="fr"], html[lang="en"] [data-l="en"] { display: block; }
+  html[lang="fr"] span[data-l="fr"], html[lang="en"] span[data-l="en"] { display: inline; }
+  .back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px; text-decoration: none; color: var(--ink-2); font-weight: 500; }
+  .back:hover { color: var(--accent-ink); }
+  .dl-cta { margin: 20px 0 8px; }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <a class="brand" href="./"><span>Spectre<em>IA</em></span></a>
+      <div class="right">
+        <div class="theme" id="theme" role="group" aria-label="Thème du site / Site theme">
+          <span class="pill" aria-hidden="true"></span>
+          <button id="t-ombre" type="button" aria-pressed="false" title="Ombre / Dark" aria-label="Ombre / Dark"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7Z" fill="currentColor"/></svg><span>Ombre</span></button>
+          <button id="t-lumiere" type="button" aria-pressed="false" title="Lumière / Light" aria-label="Lumière / Light"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M13 3l-1.4 1.4M4.4 11.6 3 13"/></g></svg><span>Lumière</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap legal-wrap">
+  <a class="back" href="./"><span data-l="fr">← Retour au site</span><span data-l="en">← Back to the site</span></a>
+  <h1><span data-l="fr">Téléchargement &amp; sécurité</span><span data-l="en">Download &amp; security</span></h1>
+  <p class="upd"><span data-l="fr">Ce que fait exactement l'installateur, pourquoi Windows peut l'avertir, et comment le vérifier toi-même.</span><span data-l="en">What the installer actually does, why Windows may warn about it, and how to check it yourself.</span></p>
+
+  <div class="dl-cta">
+    <a class="btn btn-primary" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">
+      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-l="fr">Télécharger SpectreIA</span><span data-l="en">Download SpectreIA</span>
+    </a>
+  </div>
+
+  <nav class="toc" aria-label="Sommaire">
+    <a href="#avertissement"><span data-l="fr">L'avertissement Windows</span><span data-l="en">The Windows warning</span></a>
+    <a href="#verification"><span data-l="fr">Vérification indépendante</span><span data-l="en">Independent check</span></a>
+    <a href="#transparence"><span data-l="fr">Ce que l'app fait vraiment</span><span data-l="en">What the app actually does</span></a>
+  </nav>
+
+  <!-- ═════════════════════════════ L'AVERTISSEMENT WINDOWS ═════════════════════════════ -->
+  <section class="doc" id="avertissement">
+    <div data-l="fr">
+      <h2>Pourquoi Windows (ou ton antivirus) peut t'avertir</h2>
+      <p>SpectreIA n'est pas encore signé numériquement. Signer un logiciel coûte de l'argent chaque année et demande de vérifier une identité professionnelle : hors de portée d'un projet de fan gratuit, sans publicité ni abonnement. Sans cette signature, Windows SmartScreen affiche un avertissement la première fois qu'un fichier circule peu, même quand il est inoffensif.</p>
+      <p>Certains antivirus vont plus loin et bloquent ou mettent en quarantaine un fichier par heuristique : SpectreIA utilise des raccourcis clavier globaux et peut écouter un mot de réveil à la voix pour te répondre dans le jeu, deux comportements qui ressemblent, pour un moteur automatique, à ce que fait un logiciel malveillant. C'est un faux positif.</p>
+      <h3>Au lancement</h3>
+      <p>Si Windows affiche « Windows a protégé votre ordinateur », clique sur <b>Informations complémentaires</b>, puis <b>Exécuter quand même</b>.</p>
+      <h3>Si un antivirus met un fichier en quarantaine</h3>
+      <p>Restaure le fichier concerné (ou ajoute une exclusion pour le dossier d'installation de SpectreIA), puis relance l'application. Tant que le fichier reste bloqué, l'app ne redémarrera pas, même après avoir redémarré le PC : ce n'est pas un bug qui se résout en réessayant, le fichier manquant doit être restauré.</p>
+    </div>
+    <div data-l="en">
+      <h2>Why Windows (or your antivirus) may warn you</h2>
+      <p>SpectreIA isn't digitally signed yet. Signing software costs money every year and requires verifying a professional identity: out of reach for a free fan project with no ads and no subscription. Without that signature, Windows SmartScreen shows a warning the first times a file is seen in the wild, even when it's harmless.</p>
+      <p>Some antivirus software goes further and blocks or quarantines a file by heuristics: SpectreIA uses global keyboard shortcuts and can listen for a spoken wake word to answer you in-game, two behaviors that look, to an automated engine, like what malware does. That's a false positive.</p>
+      <h3>When you launch it</h3>
+      <p>If Windows shows "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</p>
+      <h3>If an antivirus quarantines a file</h3>
+      <p>Restore the affected file (or add an exclusion for SpectreIA's install folder), then restart the app. As long as the file stays blocked, the app won't start again, even after restarting your PC: it's not a bug that fixes itself by retrying, the missing file needs to be restored.</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ VÉRIFICATION INDÉPENDANTE ═════════════════════════════ -->
+  <section class="doc" id="verification">
+    <div data-l="fr">
+      <h2>Vérification indépendante</h2>
+      <p><a href="https://www.virustotal.com" target="_blank" rel="noopener">VirusTotal</a> fait analyser un fichier par une soixantaine de moteurs antivirus différents en même temps, et publie le résultat de chacun : c'est l'outil de référence, utilisé par les éditeurs de logiciels eux-mêmes, pour vérifier un fichier sans dépendre d'un seul avis.</p>
+      <div class="vt-badge">
+        <b>0 détection sur 75 moteurs antivirus</b>
+        <span>Installateur de la version 1.0.10, analysé le 7 octobre 2026 — <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">voir le rapport complet sur VirusTotal</a>.</span>
+      </div>
+      <p>Tu peux aussi le faire toi-même : télécharge l'installateur, va sur virustotal.com, dépose le fichier (ou colle son lien de téléchargement), et regarde le résultat en moins d'une minute.</p>
+    </div>
+    <div data-l="en">
+      <h2>Independent check</h2>
+      <p><a href="https://www.virustotal.com" target="_blank" rel="noopener">VirusTotal</a> scans a file with around sixty different antivirus engines at once and publishes each one's verdict: it's the reference tool, used by software publishers themselves, to check a file without relying on a single opinion.</p>
+      <div class="vt-badge">
+        <b>0 detections out of 75 antivirus engines</b>
+        <span>Installer for version 1.0.10, scanned on October 7, 2026 — <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">see the full report on VirusTotal</a>.</span>
+      </div>
+      <p>You can also do it yourself: download the installer, go to virustotal.com, drop the file in (or paste its download link), and see the result in under a minute.</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ CE QUE L'APP FAIT VRAIMENT ═════════════════════════════ -->
+  <section class="doc" id="transparence">
+    <div data-l="fr">
+      <h2>Ce que l'application fait vraiment</h2>
+      <ul>
+        <li>Elle passe uniquement par l'API officielle de Bungie, la même que DIM : elle ne lit pas la mémoire du jeu et ne modifie aucun fichier de Destiny 2.</li>
+        <li>L'intelligence artificielle tourne sur ton PC : tes questions ne partent jamais vers un serveur.</li>
+        <li>Gratuite, sans publicité, sans compte à créer en dehors de ton compte Bungie.</li>
+        <li>Chaque version publiée reste visible et téléchargeable sur <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">la page des releases GitHub</a>, avec son détail de changements.</li>
+      </ul>
+      <p>Plus de détails dans les <a href="./legal.html#mentions">mentions légales</a> et la <a href="./legal.html#confidentialite">politique de confidentialité</a>.</p>
+    </div>
+    <div data-l="en">
+      <h2>What the application actually does</h2>
+      <ul>
+        <li>It only goes through Bungie's official API, the same one DIM uses: it doesn't read the game's memory and doesn't modify any Destiny 2 file.</li>
+        <li>The AI runs on your PC: your questions never go to a server.</li>
+        <li>Free, with no ads, with no account to create other than your Bungie account.</li>
+        <li>Every published version stays visible and downloadable on <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">the GitHub releases page</a>, with its changelog.</li>
+      </ul>
+      <p>More details in the <a href="./legal.html#mentions">legal notice</a> and the <a href="./legal.html#confidentialite">privacy policy</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="foot-links"><a href="./">SpectreIA</a><a href="https://github.com/Spectre-IA">GitHub · Spectre-IA</a><a href="https://github.com/Davvou-Ai">Davvou-Ai</a><span class="langf" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr">Français</button><button type="button" data-lang="en">English</button></span></p>
+  <p><b>SpectreIA</b> · <span data-l="fr">projet de fan gratuit, non affilié à Bungie. Destiny 2 est une marque de Bungie, Inc.</span><span data-l="en">free fan project, not affiliated with Bungie. Destiny 2 is a trademark of Bungie, Inc.</span></p>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement
+  var LANG = 'fr'
+  try { LANG = localStorage.getItem('spectre-site-lang') || (/^fr/i.test(navigator.language || '') ? 'fr' : 'en') } catch (e) { LANG = /^fr/i.test(navigator.language || '') ? 'fr' : 'en' }
+  root.lang = LANG
+  document.title = LANG === 'en' ? 'SpectreIA · Download and security' : 'SpectreIA · Téléchargement et sécurité'
+  if (LANG === 'en') { document.querySelectorAll('.theme button span').forEach(function (s) { s.textContent = s.textContent === 'Ombre' ? 'Shadow' : 'Light' }) }
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
+    b.setAttribute('aria-pressed', b.dataset.lang === LANG)
+    b.addEventListener('click', function () { if (b.dataset.lang === LANG) return; try { localStorage.setItem('spectre-site-lang', b.dataset.lang) } catch (e) {} location.reload() })
+  })
+  var bO = document.getElementById('t-ombre'), bL = document.getElementById('t-lumiere'), box = document.getElementById('theme')
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches }
+  function paint() { var d = isDark(); bO.setAttribute('aria-pressed', d); bL.setAttribute('aria-pressed', !d); box.dataset.on = d ? 'dark' : 'light' }
+  function applyTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('spectre-site-theme', t) } catch (e) {} paint() }
+  function setTheme(t, ev) {
+    var cur = isDark() ? 'dark' : 'light'
+    if (t === cur) return
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!document.startViewTransition || still) return applyTheme(t)
+    var b = ev && ev.currentTarget ? ev.currentTarget.getBoundingClientRect() : null
+    var x = b ? b.left + b.width / 2 : innerWidth / 2, y = b ? b.top + b.height / 2 : 0
+    var r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+    var vt = document.startViewTransition(function () { applyTheme(t) })
+    vt.ready.then(function () {
+      root.animate({ clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' })
+    }).catch(function () {})
+  }
+  try { var saved = localStorage.getItem('spectre-site-theme'); if (saved) root.setAttribute('data-theme', saved) } catch (e) {}
+  bO.addEventListener('click', function (e) { setTheme('dark', e) }); bL.addEventListener('click', function (e) { setTheme('light', e) })
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint) } catch (e) {}
+  paint()
+  // Lien direct vers le dernier installateur (même mécanisme que la page d'accueil)
+  fetch('https://api.github.com/repos/Spectre-IA/SpectreIA/releases/latest').then(function (r) { return r.ok ? r.json() : null }).then(function (d) {
+    var exe = d && d.assets && d.assets.find(function (a) { return /\.exe$/.test(a.name) })
+    if (exe) document.querySelectorAll('[data-download]').forEach(function (a) { a.href = exe.browser_download_url })
+  }).catch(function () {})
+})()
+</script>
