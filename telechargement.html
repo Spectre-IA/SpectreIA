@@ -291,28 +291,102 @@
   .chat form button { border: 0; background: var(--accent); color: var(--on-accent); width: 42px; border-radius: 4px; cursor: pointer; display: grid; place-items: center; }
 
   /* ── Page téléchargement / sécurité ───────────────────────────────────────────────── */
-  .legal-wrap { max-width: 780px; margin-inline: auto; padding-block: 40px 90px; }
-  .legal-wrap > h1 { font-size: clamp(36px, 6vw, 60px); margin-bottom: 8px; }
-  .legal-wrap .upd { color: var(--ink-3); font-size: 14px; margin-bottom: 30px; }
-  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
-  .toc a { text-decoration: none; color: var(--ink); border: 1px solid var(--line-2); background: transparent; padding: 9px 16px; border-radius: 4px; font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; transition: border-color .2s; }
-  .toc a:hover { border-color: var(--accent); color: var(--accent-ink); }
-  .doc { padding-block: 0 56px; scroll-margin-top: 90px; }
-  .doc h2 { font-size: clamp(28px, 4vw, 38px); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-  .doc h3 { font-size: 19px; margin: 26px 0 8px; color: var(--accent-ink); }
-  .doc p, .doc li { color: var(--ink-2); font-size: 16px; }
-  .doc p + p { margin-top: 12px; }
-  .doc ul + p { margin-top: 14px; }
-  .doc ul { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; }
-  .note { border: 1px solid var(--line-2); background: var(--glass); border-radius: 6px; padding: 14px 18px; color: var(--ink-2); margin-top: 16px; }
-  .vt-badge { display: flex; align-items: center; gap: 14px; border: 1px solid var(--line-2); background: var(--glass); border-radius: 8px; padding: 16px 20px; margin-top: 14px; }
-  .vt-badge b { font-size: 22px; color: var(--accent-ink); white-space: nowrap; }
-  .vt-badge span { color: var(--ink-3); font-size: 13px; }
-  [data-l] { display: none; } html[lang="fr"] [data-l="fr"], html[lang="en"] [data-l="en"] { display: block; }
-  html[lang="fr"] span[data-l="fr"], html[lang="en"] span[data-l="en"] { display: inline; }
-  .back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px; text-decoration: none; color: var(--ink-2); font-weight: 500; }
+  :root { --warn: #9A5B00; --warn-bg: rgba(214,150,30,.10); --warn-line: rgba(176,112,8,.38); --safe: #2F7A4C; --safe-rgb: 47,122,76; --ease: cubic-bezier(.32,.72,0,1); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --warn: #F2B544; --warn-bg: rgba(242,181,68,.07); --warn-line: rgba(242,181,68,.34); --safe: #63E68A; --safe-rgb: 99,230,138; } }
+  :root[data-theme="dark"] { --warn: #F2B544; --warn-bg: rgba(242,181,68,.07); --warn-line: rgba(242,181,68,.34); --safe: #63E68A; --safe-rgb: 99,230,138; }
+  [data-l] { display: none !important; }
+  html[lang="fr"] [data-l="fr"], html[lang="en"] [data-l="en"] { display: inline !important; }
+
+  .dl { max-width: 1040px; margin-inline: auto; padding-block: 34px 110px; }
+  .back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-3); font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; transition: color .3s var(--ease); }
   .back:hover { color: var(--accent-ink); }
-  .dl-cta { margin: 20px 0 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-2); border-radius: 999px; padding: 6px 12px; font: 500 10.5px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+  .tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--safe); box-shadow: 0 0 0 3px rgba(var(--safe-rgb),.18); }
+
+  /* En-tête + carte de téléchargement */
+  .dl-hero { display: grid; grid-template-columns: 1fr 1.08fr; gap: 56px; align-items: center; padding-block: 44px 64px; }
+  .dl-hero h1 { font-size: clamp(42px, 6.4vw, 76px); font-weight: 800; letter-spacing: -.045em; line-height: .98; margin: 22px 0 18px; }
+  .dl-hero h1 .hl { color: var(--accent-ink); display: block; }
+  .dl-hero .lead { font-size: 18px; max-width: 40ch; }
+
+  .bezel { padding: 6px; border-radius: 22px; background: var(--glass); border: 1px solid var(--line); }
+  .core { border-radius: 16px; background: var(--glass-2); border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .card { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 28px; }
+
+  .gauge { position: relative; width: 156px; height: 156px; flex: none; text-decoration: none; color: inherit; display: block; }
+  .gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .gauge .ticks { stroke: var(--line-2); }
+  .gauge .arc { stroke: var(--safe); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: var(--off); filter: drop-shadow(0 0 6px rgba(var(--safe-rgb),.35)); }
+  .gauge[data-state="flagged"] .arc { stroke: var(--warn); filter: none; }
+  .gauge[data-state="pending"] .arc { opacity: 0; }
+  .gauge .mid { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+  .gauge .num { font-size: 46px; font-weight: 800; letter-spacing: -.05em; line-height: 1; color: var(--ink); }
+  .gauge .num small { font-size: 17px; font-weight: 600; color: var(--ink-3); letter-spacing: -.02em; margin-left: 2px; }
+  .gauge .gcap { font: 600 9.5px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--safe); margin-top: 6px; }
+  .gauge[data-state="flagged"] .gcap { color: var(--warn); } .gauge[data-state="pending"] .gcap { color: var(--ink-3); }
+  @media (prefers-reduced-motion: no-preference) {
+    .gauge .arc { animation: fill 1.6s var(--ease) .25s both; }
+    @keyframes fill { from { stroke-dashoffset: 100; } }
+  }
+
+  .card-side h2 { font-size: 22px; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 6px; }
+  .card-side p { color: var(--ink-3); font-size: 14px; line-height: 1.5; margin: 0; }
+  .card-side p a { color: var(--ink-2); }
+  .btn-dl { display: inline-flex; align-items: center; gap: 14px; margin-top: 18px; padding: 8px 8px 8px 22px; border-radius: 999px; background: var(--accent); color: var(--on-accent); text-decoration: none; font: 600 12.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; transition: transform .5s var(--ease), filter .3s var(--ease); }
+  .btn-dl .ic { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(0,0,0,.14); transition: transform .5s var(--ease); }
+  .btn-dl:hover { filter: brightness(1.06); } .btn-dl:hover .ic { transform: translateY(2px) scale(1.06); } .btn-dl:active { transform: scale(.98); }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 14px; font: 500 11px var(--mono); letter-spacing: .06em; color: var(--ink-3); }
+
+  /* Encadré attention */
+  .warn { position: relative; border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: 18px; padding: 30px 32px 30px 104px; overflow: hidden; }
+  .warn::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: repeating-linear-gradient(-45deg, var(--warn) 0 8px, transparent 8px 16px); opacity: .85; }
+  .warn .sign { position: absolute; left: 30px; top: 30px; width: 52px; height: 52px; color: var(--warn); }
+  .warn .k { font: 600 11px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--warn); }
+  .warn h2 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; margin: 8px 0 10px; }
+  .warn .intro { color: var(--ink-2); max-width: 62ch; margin: 0; font-size: 16px; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .case { background: var(--glass-2); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .case h3 { font-size: 16px; letter-spacing: -.01em; line-height: 1.3; margin-bottom: 12px; }
+  .case ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: s; }
+  .case li { counter-increment: s; display: flex; gap: 10px; align-items: baseline; color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
+  .case li::before { content: counter(s); flex: none; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font: 600 10.5px var(--mono); background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-line); transform: translateY(3px); }
+  .key { display: inline-block; font: 600 12px var(--mono); padding: 1px 7px; border-radius: 4px; border: 1px solid var(--line-2); background: var(--glass); color: var(--ink); }
+
+  /* Sections suivantes */
+  .blk { padding-top: 88px; }
+  .blk-head { display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; align-items: start; }
+  .blk h2 { font-size: clamp(28px, 3.6vw, 40px); }
+  .blk-head p { color: var(--ink-2); margin: 0; font-size: 16px; } .blk-head p + p { margin-top: 12px; }
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 36px; }
+  .tile:nth-child(1), .tile:nth-child(4) { grid-column: span 4; } .tile:nth-child(2), .tile:nth-child(3) { grid-column: span 2; }
+  .tile .core { padding: 22px; height: 100%; box-sizing: border-box; }
+  .tile svg { color: var(--accent-ink); margin-bottom: 14px; display: block; }
+  .tile h3 { font-size: 17px; letter-spacing: -.015em; line-height: 1.25; margin-bottom: 6px; }
+  .tile p { margin: 0; color: var(--ink-3); font-size: 14.5px; line-height: 1.5; }
+  .steps3 { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .steps3 li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 15.5px; }
+  .steps3 .n { font: 600 12px var(--mono); color: var(--accent-ink); letter-spacing: .1em; padding-top: 3px; }
+  .fine { margin-top: 30px; color: var(--ink-3); font-size: 14px; }
+
+  @media (max-width: 900px) {
+    .dl-hero { grid-template-columns: 1fr; gap: 30px; padding-block: 26px 40px; }
+    .blk-head { grid-template-columns: 1fr; gap: 18px; }
+  }
+  @media (max-width: 640px) {
+    .dl { padding-block: 20px 70px; }
+    .dl-hero h1 { margin: 16px 0 12px; }
+    .dl-hero .lead { font-size: 16px; }
+    .card { grid-template-columns: 1fr; gap: 20px; padding: 24px 20px; justify-items: center; text-align: center; }
+    .gauge { width: 168px; height: 168px; }
+    .btn-dl { width: 100%; justify-content: space-between; box-sizing: border-box; }
+    .meta { justify-content: center; }
+    .warn { padding: 24px 20px 22px 24px; }
+    .warn .sign { position: static; width: 40px; height: 40px; margin-bottom: 10px; display: block; }
+    .cases { grid-template-columns: 1fr; }
+    .blk { padding-top: 64px; }
+    .bento { grid-template-columns: 1fr; }
+    .bento .tile { grid-column: auto; }
+  }
 </style>
 
 <header class="top">
@@ -330,90 +404,118 @@
   </div>
 </header>
 
-<main class="wrap legal-wrap">
+<main class="wrap dl">
   <a class="back" href="./"><span data-l="fr">← Retour au site</span><span data-l="en">← Back to the site</span></a>
-  <h1><span data-l="fr">Téléchargement &amp; sécurité</span><span data-l="en">Download &amp; security</span></h1>
-  <p class="upd"><span data-l="fr">Ce que fait exactement l'installateur, pourquoi Windows peut l'avertir, et comment le vérifier toi-même.</span><span data-l="en">What the installer actually does, why Windows may warn about it, and how to check it yourself.</span></p>
 
-  <div class="dl-cta">
-    <a class="btn btn-primary" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">
-      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span data-l="fr">Télécharger SpectreIA</span><span data-l="en">Download SpectreIA</span>
-    </a>
-  </div>
-
-  <nav class="toc" aria-label="Sommaire">
-    <a href="#avertissement"><span data-l="fr">L'avertissement Windows</span><span data-l="en">The Windows warning</span></a>
-    <a href="#verification"><span data-l="fr">Vérification indépendante</span><span data-l="en">Independent check</span></a>
-    <a href="#transparence"><span data-l="fr">Ce que l'app fait vraiment</span><span data-l="en">What the app actually does</span></a>
-  </nav>
-
-  <!-- ═════════════════════════════ L'AVERTISSEMENT WINDOWS ═════════════════════════════ -->
-  <section class="doc" id="avertissement">
-    <div data-l="fr">
-      <h2>Pourquoi Windows (ou ton antivirus) peut t'avertir</h2>
-      <p>SpectreIA n'est pas encore signé numériquement. Signer un logiciel coûte de l'argent chaque année et demande de vérifier une identité professionnelle : hors de portée d'un projet de fan gratuit, sans publicité ni abonnement. Sans cette signature, Windows SmartScreen affiche un avertissement la première fois qu'un fichier circule peu, même quand il est inoffensif.</p>
-      <p>Certains antivirus vont plus loin et bloquent ou mettent en quarantaine un fichier par heuristique : SpectreIA utilise des raccourcis clavier globaux et peut écouter un mot de réveil à la voix pour te répondre dans le jeu, deux comportements qui ressemblent, pour un moteur automatique, à ce que fait un logiciel malveillant. C'est un faux positif.</p>
-      <h3>Au lancement</h3>
-      <p>Si Windows affiche « Windows a protégé votre ordinateur », clique sur <b>Informations complémentaires</b>, puis <b>Exécuter quand même</b>.</p>
-      <h3>Si un antivirus met un fichier en quarantaine</h3>
-      <p>Restaure le fichier concerné (ou ajoute une exclusion pour le dossier d'installation de SpectreIA), puis relance l'application. Tant que le fichier reste bloqué, l'app ne redémarrera pas, même après avoir redémarré le PC : ce n'est pas un bug qui se résout en réessayant, le fichier manquant doit être restauré.</p>
+  <!-- ═════════════════════════════ TÉLÉCHARGEMENT + SCORE ═════════════════════════════ -->
+  <section class="dl-hero">
+    <div>
+      <span class="tag"><i></i><span data-l="fr">Windows 10 et 11 · gratuit</span><span data-l="en">Windows 10 and 11 · free</span></span>
+      <h1><span data-l="fr">Télécharge</span><span data-l="en">Download</span> <span class="hl">SpectreIA</span></h1>
+      <p class="lead"><span data-l="fr">Un seul installateur, ensuite l'app se met à jour toute seule. Chaque version est analysée par 75 antivirus avant d'arriver ici.</span><span data-l="en">One installer, then the app keeps itself up to date. Every version is scanned by 75 antivirus engines before landing here.</span></p>
     </div>
-    <div data-l="en">
-      <h2>Why Windows (or your antivirus) may warn you</h2>
-      <p>SpectreIA isn't digitally signed yet. Signing software costs money every year and requires verifying a professional identity: out of reach for a free fan project with no ads and no subscription. Without that signature, Windows SmartScreen shows a warning the first times a file is seen in the wild, even when it's harmless.</p>
-      <p>Some antivirus software goes further and blocks or quarantines a file by heuristics: SpectreIA uses global keyboard shortcuts and can listen for a spoken wake word to answer you in-game, two behaviors that look, to an automated engine, like what malware does. That's a false positive.</p>
-      <h3>When you launch it</h3>
-      <p>If Windows shows "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</p>
-      <h3>If an antivirus quarantines a file</h3>
-      <p>Restore the affected file (or add an exclusion for SpectreIA's install folder), then restart the app. As long as the file stays blocked, the app won't start again, even after restarting your PC: it's not a bug that fixes itself by retrying, the missing file needs to be restored.</p>
+
+    <div class="bezel">
+      <div class="core card">
+        <a class="gauge" data-state="clean" href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener" style="--off: calc(100 - 1.0000 * 100)" aria-label="VirusTotal : 0 / 75">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ticks" cx="60" cy="60" r="52" fill="none" stroke-width="7" pathLength="150" stroke-dasharray="1.1 0.9"/>
+            <circle class="arc" cx="60" cy="60" r="52" fill="none" stroke-width="7" pathLength="100"/>
+          </svg>
+          <div class="mid">
+            <div class="num">0<small>/75</small></div>
+            <div class="gcap"><span data-l="fr">détection</span><span data-l="en">detections</span></div>
+          </div>
+        </a>
+        <div class="card-side">
+          <h2><span data-l="fr">Aucun antivirus ne le signale</span><span data-l="en">No antivirus flags it</span></h2>
+          <p><span data-l="fr">Version 1.0.10, analysée par 75 moteurs sur VirusTotal le 7 octobre 2026. <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">Voir le rapport ↗</a></span><span data-l="en">Version 1.0.10, scanned by 75 engines on VirusTotal on October 7, 2026. <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">See the report ↗</a></span></p>
+          <a class="btn-dl" data-download href="https://github.com/Spectre-IA/SpectreIA/releases/latest/download/SpectreIA-Setup.exe">
+            <span data-l="fr">Télécharger</span><span data-l="en">Download</span>
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <div class="meta"><span>SpectreIA-Setup.exe</span><span id="relsize"></span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═════════════════════════════ VÉRIFICATION INDÉPENDANTE ═════════════════════════════ -->
-  <section class="doc" id="verification">
-    <div data-l="fr">
-      <h2>Vérification indépendante</h2>
-      <p><a href="https://www.virustotal.com" target="_blank" rel="noopener">VirusTotal</a> fait analyser un fichier par une soixantaine de moteurs antivirus différents en même temps, et publie le résultat de chacun : c'est l'outil de référence, utilisé par les éditeurs de logiciels eux-mêmes, pour vérifier un fichier sans dépendre d'un seul avis.</p>
-      <div class="vt-badge">
-        <b>0 détection sur 75 moteurs antivirus</b>
-        <span>Installateur de la version 1.0.10, analysé le 7 octobre 2026 — <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">voir le rapport complet sur VirusTotal</a>.</span>
+  <!-- ═════════════════════════════ ATTENTION ═════════════════════════════ -->
+  <aside class="warn" id="avertissement" role="note">
+    <svg class="sign" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 45 42H3L24 5Z" fill="currentColor" fill-opacity=".14" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 19v11" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24" cy="35.5" r="2" fill="currentColor"/></svg>
+    <div>
+      <div class="k"><span data-l="fr">Attention · c'est normal</span><span data-l="en">Heads-up · this is expected</span></div>
+      <h2><span data-l="fr">Windows peut dire que l'app est dangereuse. Elle ne l'est pas.</span><span data-l="en">Windows may say the app is dangerous. It isn't.</span></h2>
+      <p class="intro"><span data-l="fr">SpectreIA n'a pas encore de signature numérique (elle est payante), donc Windows et certains antivirus se méfient par défaut d'un fichier qu'ils voient peu. C'est un faux positif. Voici quoi faire :</span><span data-l="en">SpectreIA doesn't have a digital signature yet (they're paid), so Windows and some antivirus software distrust any file they rarely see. It's a false positive. Here's what to do:</span></p>
+      <div class="cases">
+        <div class="case">
+          <h3><span data-l="fr">L'écran « Windows a protégé votre ordinateur »</span><span data-l="en">The "Windows protected your PC" screen</span></h3>
+          <ol>
+            <li><span><span data-l="fr">Clique sur </span><span data-l="en">Click </span><span class="key"><span data-l="fr">Informations complémentaires</span><span data-l="en">More info</span></span></span></li>
+            <li><span><span data-l="fr">Puis sur </span><span data-l="en">Then </span><span class="key"><span data-l="fr">Exécuter quand même</span><span data-l="en">Run anyway</span></span></span></li>
+          </ol>
+        </div>
+        <div class="case">
+          <h3><span data-l="fr">Ton antivirus bloque ou supprime un fichier</span><span data-l="en">Your antivirus blocks or removes a file</span></h3>
+          <ol>
+            <li><span><span data-l="fr">Restaure-le depuis la quarantaine, ou ajoute une exclusion pour le dossier de SpectreIA.</span><span data-l="en">Restore it from quarantine, or add an exclusion for SpectreIA's folder.</span></span></li>
+            <li><span><span data-l="fr">Relance l'app. Redémarrer le PC ne suffit pas tant que le fichier reste bloqué.</span><span data-l="en">Restart the app. Rebooting won't help while the file stays blocked.</span></span></li>
+          </ol>
+        </div>
       </div>
-      <p>Tu peux aussi le faire toi-même : télécharge l'installateur, va sur virustotal.com, dépose le fichier (ou colle son lien de téléchargement), et regarde le résultat en moins d'une minute.</p>
     </div>
-    <div data-l="en">
-      <h2>Independent check</h2>
-      <p><a href="https://www.virustotal.com" target="_blank" rel="noopener">VirusTotal</a> scans a file with around sixty different antivirus engines at once and publishes each one's verdict: it's the reference tool, used by software publishers themselves, to check a file without relying on a single opinion.</p>
-      <div class="vt-badge">
-        <b>0 detections out of 75 antivirus engines</b>
-        <span>Installer for version 1.0.10, scanned on October 7, 2026 — <a href="https://www.virustotal.com/gui/file/4c245975c099a66f4e41e815dfade61406595861fefa61c2a47bb6f140be4024" target="_blank" rel="noopener">see the full report on VirusTotal</a>.</span>
+  </aside>
+
+  <!-- ═════════════════════════════ POURQUOI ═════════════════════════════ -->
+  <section class="blk reveal" id="pourquoi">
+    <div class="blk-head">
+      <div><span class="eyebrow"><span data-l="fr">Pourquoi cet avertissement</span><span data-l="en">Why the warning</span></span><h2><span data-l="fr">Pas de signature, pas de confiance automatique</span><span data-l="en">No signature, no automatic trust</span></h2></div>
+      <div>
+        <p><span data-l="fr">Signer un logiciel coûte de l'argent chaque année et demande une identité d'entreprise : hors de portée d'un projet de fan gratuit, sans pub ni abonnement. Sans signature, SmartScreen avertit tant qu'un fichier a peu circulé.</span><span data-l="en">Signing software costs money every year and requires a business identity: out of reach for a free fan project with no ads or subscription. Without a signature, SmartScreen warns until a file has been around for a while.</span></p>
+        <p><span data-l="fr">Certains antivirus réagissent aussi aux raccourcis clavier globaux et au mot de réveil vocal. Ils servent à te répondre en jeu, mais pour un moteur automatique, ça ressemble à un comportement suspect.</span><span data-l="en">Some antivirus software also reacts to global keyboard shortcuts and the voice wake word. They let the app answer you in-game, but to an automated engine they look suspicious.</span></p>
       </div>
-      <p>You can also do it yourself: download the installer, go to virustotal.com, drop the file in (or paste its download link), and see the result in under a minute.</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ VÉRIFIER SOI-MÊME ═════════════════════════════ -->
+  <section class="blk reveal" id="verification">
+    <div class="blk-head">
+      <div><span class="eyebrow"><span data-l="fr">Vérification indépendante</span><span data-l="en">Independent check</span></span><h2><span data-l="fr">Vérifie-le toi-même en une minute</span><span data-l="en">Check it yourself in a minute</span></h2></div>
+      <ol class="steps3">
+        <li><span class="n">01</span><span><span data-l="fr">Télécharge l'installateur avec le bouton plus haut.</span><span data-l="en">Download the installer with the button above.</span></span></li>
+        <li><span class="n">02</span><span><span data-l="fr">Ouvre <a href="https://www.virustotal.com" target="_blank" rel="noopener">virustotal.com</a> et dépose le fichier.</span><span data-l="en">Open <a href="https://www.virustotal.com" target="_blank" rel="noopener">virustotal.com</a> and drop the file in.</span></span></li>
+        <li><span class="n">03</span><span><span data-l="fr">Une soixantaine d'antivirus donnent chacun leur verdict.</span><span data-l="en">Around sixty antivirus engines each give their verdict.</span></span></li>
+      </ol>
     </div>
   </section>
 
   <!-- ═════════════════════════════ CE QUE L'APP FAIT VRAIMENT ═════════════════════════════ -->
-  <section class="doc" id="transparence">
-    <div data-l="fr">
-      <h2>Ce que l'application fait vraiment</h2>
-      <ul>
-        <li>Elle passe uniquement par l'API officielle de Bungie, la même que DIM : elle ne lit pas la mémoire du jeu et ne modifie aucun fichier de Destiny 2.</li>
-        <li>L'intelligence artificielle tourne sur ton PC : tes questions ne partent jamais vers un serveur.</li>
-        <li>Gratuite, sans publicité, sans compte à créer en dehors de ton compte Bungie.</li>
-        <li>Chaque version publiée reste visible et téléchargeable sur <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">la page des releases GitHub</a>, avec son détail de changements.</li>
-      </ul>
-      <p>Plus de détails dans les <a href="./legal.html#mentions">mentions légales</a> et la <a href="./legal.html#confidentialite">politique de confidentialité</a>.</p>
+  <section class="blk reveal" id="transparence">
+    <span class="eyebrow"><span data-l="fr">Transparence</span><span data-l="en">Transparency</span></span>
+    <h2><span data-l="fr">Ce que l'application fait vraiment</span><span data-l="en">What the app actually does</span></h2>
+    <div class="bento">
+      <div class="bezel tile"><div class="core">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.4 3.2 8.3 7.5 9.5 4.3-1.2 7.5-5.1 7.5-9.5V6L12 3Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>
+        <h3><span data-l="fr">Uniquement l'API officielle de Bungie</span><span data-l="en">Only Bungie's official API</span></h3>
+        <p><span data-l="fr">La même que DIM. Elle ne lit pas la mémoire du jeu et ne touche à aucun fichier de Destiny 2.</span><span data-l="en">The same one DIM uses. It doesn't read game memory or touch any Destiny 2 file.</span></p>
+      </div></div>
+      <div class="bezel tile"><div class="core">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+        <h3><span data-l="fr">L'IA tourne sur ton PC</span><span data-l="en">The AI runs on your PC</span></h3>
+        <p><span data-l="fr">Tes questions ne partent vers aucun serveur.</span><span data-l="en">Your questions never go to a server.</span></p>
+      </div></div>
+      <div class="bezel tile"><div class="core">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 15.5 15.5 8.5"/></svg>
+        <h3><span data-l="fr">Gratuite, sans pub</span><span data-l="en">Free, no ads</span></h3>
+        <p><span data-l="fr">Aucun compte à créer, à part ton compte Bungie.</span><span data-l="en">No account to create, other than your Bungie one.</span></p>
+      </div></div>
+      <div class="bezel tile"><div class="core">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16.5" r="2.5"/></svg>
+        <h3><span data-l="fr">Chaque version est publique</span><span data-l="en">Every version is public</span></h3>
+        <p><span data-l="fr">Toutes restent visibles et téléchargeables sur <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">GitHub</a>, avec le détail des changements.</span><span data-l="en">They all stay visible and downloadable on <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">GitHub</a>, with their changelog.</span></p>
+      </div></div>
     </div>
-    <div data-l="en">
-      <h2>What the application actually does</h2>
-      <ul>
-        <li>It only goes through Bungie's official API, the same one DIM uses: it doesn't read the game's memory and doesn't modify any Destiny 2 file.</li>
-        <li>The AI runs on your PC: your questions never go to a server.</li>
-        <li>Free, with no ads, with no account to create other than your Bungie account.</li>
-        <li>Every published version stays visible and downloadable on <a href="https://github.com/Spectre-IA/SpectreIA/releases" target="_blank" rel="noopener">the GitHub releases page</a>, with its changelog.</li>
-      </ul>
-      <p>More details in the <a href="./legal.html#mentions">legal notice</a> and the <a href="./legal.html#confidentialite">privacy policy</a>.</p>
-    </div>
+    <p class="fine"><span data-l="fr">Plus de détails dans les <a href="./legal.html#mentions">mentions légales</a> et la <a href="./legal.html#confidentialite">politique de confidentialité</a>.</span><span data-l="en">More details in the <a href="./legal.html#mentions">legal notice</a> and the <a href="./legal.html#confidentialite">privacy policy</a>.</span></p>
   </section>
 </main>
 
@@ -460,6 +562,8 @@
   fetch('https://api.github.com/repos/Spectre-IA/SpectreIA/releases/latest').then(function (r) { return r.ok ? r.json() : null }).then(function (d) {
     var exe = d && d.assets && d.assets.find(function (a) { return /\.exe$/.test(a.name) })
     if (exe) document.querySelectorAll('[data-download]').forEach(function (a) { a.href = exe.browser_download_url })
+    var sz = document.getElementById('relsize')
+    if (sz && exe) sz.textContent = Math.round(exe.size / 1048576) + (LANG === 'en' ? ' MB' : ' Mo')
   }).catch(function () {})
 })()
 </script>
